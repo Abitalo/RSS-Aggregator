@@ -16,16 +16,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="55dp"
             android:gravity="center" >
+
             <EditText
                 android:id="@+id/edit_login_username"
                 android:layout_width="fill_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="5dp"
-                android:inputType="number"
+                android:inputType="text"
                 android:paddingRight="60dp"
                 android:maxLength="20"
                 android:paddingLeft="55dp" >
             </EditText>
+
         </FrameLayout>
         <FrameLayout
             android:id="@+id/frame_login_password"

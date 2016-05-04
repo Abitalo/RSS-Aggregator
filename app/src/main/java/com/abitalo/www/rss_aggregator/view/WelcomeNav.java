@@ -1,5 +1,6 @@
 package com.abitalo.www.rss_aggregator.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -24,6 +25,7 @@ public class WelcomeNav extends Fragment implements View.OnClickListener,IAccoun
     EditText username=null;
     EditText password=null;
     Button btnLoginSubmit = null;
+    Button btnRegisterSubmit=null;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.nav_account,container,false);
@@ -37,20 +39,27 @@ public class WelcomeNav extends Fragment implements View.OnClickListener,IAccoun
 
         btnLoginSubmit=(Button) view.findViewById(R.id.btn_login_submit);
         btnLoginSubmit.setOnClickListener(this);
+
+        btnRegisterSubmit=(Button)view.findViewById(R.id.btn_login_register);
+        btnRegisterSubmit.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.btn_login_submit){
-                presenter=new AccountPresenter(this);
-                presenter.login();
-                NavigationView navigationView=(NavigationView)getActivity().findViewById(R.id.nav_account);
-                navigationView.addView(new AccountNavigationView(getActivity()));
-                onDestroy();
-
+            presenter=new AccountPresenter(this);
+            presenter.login();
+        }else if(v.getId()==R.id.btn_login_register){
+            presenter=new AccountPresenter(this);
+            presenter.register();
         }
     }
 
+    private void showMenu(){//将来需要使用从云端获得的用户数据作为参数，然后使用adapter根据用户数据填充菜单。。
+        NavigationView navigationView=(NavigationView)getActivity().findViewById(R.id.nav_account);
+        navigationView.addView(new AccountNavigationView(getActivity()));
+        onDestroy();
+    }
     @Override
     public String getUserName() {
         return username.getText().toString();
@@ -62,7 +71,7 @@ public class WelcomeNav extends Fragment implements View.OnClickListener,IAccoun
     }
 
     @Override
-    public boolean showWarning(String msg) {
+    public boolean onFailure(String msg) {
         //getActivity().findViewById(R.id.content_coordinator
         //用上面的可以滑掉，但不会显示在最上层
         Snackbar.make(view,msg,Snackbar.LENGTH_SHORT).show();
@@ -70,9 +79,14 @@ public class WelcomeNav extends Fragment implements View.OnClickListener,IAccoun
     }
 
     @Override
-    public boolean showSuccessHint() {
-
+    public boolean onSuccess() {
+        showMenu();
         Snackbar.make(view,"Success!",Snackbar.LENGTH_SHORT).show();
         return false;
+    }
+
+    @Override
+    public Context getContext() {
+        return super.getContext();
     }
 }

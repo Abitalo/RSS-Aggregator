@@ -11,7 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.abitalo.www.rss_aggregator.constants.Conf;
 import com.abitalo.www.rss_aggregator.view.WelcomeNav;
+
+import cn.bmob.v3.Bmob;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //SDK 初始化
+        Bmob.initialize(this, Conf.APP_ID);
 
         fragmentManager = getSupportFragmentManager();
         initialView();
