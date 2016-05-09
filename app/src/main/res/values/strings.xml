@@ -5,4 +5,25 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="sign_up">Sign up</string>
+    <string name="user_name">user name</string>
+    <string name="user_email">user mail</string>
+    <string name="password">password</string>
+    <string name="re_password">pleas input password again</string>
+    <string name="login">LOGIN</string>
+    <string name="exist_to_login">Existing user? Login</string>
+    <string name="sign_in">Login in</string>
+    <string name="create_count">Create my account</string>
+    <string name="forget_password">forget your password?</string>
+    <string name="new_sign_up">New user? Sign up</string>
+    <string name="your_email">Enter your email</string>
+    <string name="forget_desc">Will send you instructions to reset your password</string>
+    <string name="forget_to_find">Find my password</string>
+    <string name="welcome_word">Make here home</string>
+    <string name="welcome_desc">Make here home</string>
+    <string name="add_content">ADD CONTENT</string>
+    <string name="explore">EXPLORE</string>
+    <string name="exit_user">Existing User?</string>
+    <string name="back_to_login">Back to login</string>
+
 </resources>

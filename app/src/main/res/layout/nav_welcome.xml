@@ -1,13 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.NavigationView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_logged_account"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_gravity="start"
-    android:fitsSystemWindows="true"
-    app:headerLayout="@layout/nav_header_main"
-    app:menu="@menu/activity_main_drawer">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/welcome"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-</android.support.design.widget.NavigationView>
+    <TextView
+        android:id="@+id/welcomeWord"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/welcome_word"
+        android:textColor="#333"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/welcomeDesc"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/welcomeWord"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/welcome_desc"
+        android:textColor="#999"
+        android:textSize="15sp" />
+
+
+    <Button
+        android:id="@+id/addContent"
+        style="@style/BlueButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/welcomeDesc"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="@string/add_content"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/welcomeExplore"
+        style="@style/ExploreButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addContent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="@string/explore"
+        android:textSize="15sp" />
+
+
+    <TextView
+        android:id="@+id/isExist"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/welcomeLogin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/exit_user"
+        android:textColor="#999"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/welcomeLogin"
+        style="@style/ExploreButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="@string/login"
+        android:textSize="15sp" />
+
+
+</RelativeLayout>
