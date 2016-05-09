@@ -12,7 +12,7 @@
         android:text="@string/sign_up"
         android:textStyle="bold"
         android:textSize="25sp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="70dp"
         android:layout_centerHorizontal="true" />
 
     <android.support.design.widget.TextInputLayout
@@ -67,12 +67,12 @@
         android:layout_width="300dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/edit_sign_pass"
-        android:id="@+id/edit_sign_repass"
+        android:id="@+id/sign_up_confirm_password"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/sign_user_repass"
+            android:id="@+id/sign_up_edit_confirm_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
@@ -84,7 +84,7 @@
         style="@style/BlueButton"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edit_sign_repass"
+        android:layout_below="@+id/sign_up_confirm_password"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="@string/create_count"
