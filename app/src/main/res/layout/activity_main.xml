@@ -29,11 +29,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true">
-        <RelativeLayout
-            android:id="@+id/login_nav_account"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </RelativeLayout>
+
     </android.support.design.widget.NavigationView>
         <!--app:headerLayout="@layout/nav_header_main"-->
         <!--app:menu="@menu/activity_main_drawer" -->

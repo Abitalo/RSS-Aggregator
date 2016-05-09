@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        fragmentManager.beginTransaction().add(R.id.login_nav_account, new WelcomeNav(), "account_nav").commit();
+        fragmentManager.beginTransaction().add(R.id.nav_account, new WelcomeNav(), "account_nav").commit();
     }
 
     @Override
