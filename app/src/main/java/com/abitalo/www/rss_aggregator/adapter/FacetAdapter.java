@@ -3,6 +3,7 @@ package com.abitalo.www.rss_aggregator.adapter;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,6 @@ public class FacetAdapter extends RecyclerView.Adapter<FacetAdapter.ViewHolder> 
     private Context context;
     private List<Facet> facets;
     private int line;
-
     public FacetAdapter(Context context, List<Facet> facets,int line) {
         this.context = context;
         this.facets = facets;
@@ -33,20 +33,28 @@ public class FacetAdapter extends RecyclerView.Adapter<FacetAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = null;
-        if (line == 1){
+        if (viewType == 1){
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.big_facet_card, parent, false);
-        }else if (line == 3){
+            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams)view.getLayoutParams();
+            layoutParams.setFullSpan(true);
+            view.setLayoutParams(layoutParams);
+        }else if (viewType == 2){
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.small_facet_card, parent, false);
+            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams)view.getLayoutParams();
+            layoutParams.setFullSpan(false);
+            view.setLayoutParams(layoutParams);
         }
-        final ViewHolder viewHolder = new ViewHolder(view);
+
+
+  /*      final ViewHolder viewHolder = new ViewHolder(view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = viewHolder.getPosition();
                 showResource(position);
             }
-        });
-        return viewHolder;
+        });*/
+        return new ViewHolder(view);
     }
 
     private void showResource(int position) {
@@ -57,7 +65,18 @@ public class FacetAdapter extends RecyclerView.Adapter<FacetAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.tvFacetName.setText(facets.get(position).getFacetName());
+
+
         //// TODO:需要添加图片的加载解析 2016/5/10
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if(position < 6){
+            return 1;
+        }else{
+            return 2;
+        }
     }
 
     @Override
