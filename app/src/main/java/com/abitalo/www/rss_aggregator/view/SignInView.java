@@ -94,7 +94,7 @@ public class SignInView extends Fragment implements View.OnClickListener, IAccou
         drawer.openDrawer(getActivity().findViewById(R.id.nav_account));
 
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_content, new MainContentDemo(), "Main content").commit();
+        fragmentManager.beginTransaction().replace(R.id.fragment_content, new MainContentDemoView(), "Main content").commit();
     }
 
     private void login() {

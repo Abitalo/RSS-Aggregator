@@ -41,7 +41,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:fitsSystemWindows="false">
-        <include layout="@layout/nav_discovery"></include>
+        <!--<include layout="@layout/nav_discovery"></include>-->
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

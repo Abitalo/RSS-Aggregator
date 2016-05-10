@@ -40,6 +40,7 @@ public class SignUpView extends Fragment implements View.OnClickListener, IAccou
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.sign_up_main, container, false);
+        //// TODO:需要更改UI界面，左边添加图标，下面添加手机。添加邮箱验证 2016/5/9
         initView();
         return view;
     }
@@ -117,6 +118,6 @@ public class SignUpView extends Fragment implements View.OnClickListener, IAccou
         drawer.openDrawer(getActivity().findViewById(R.id.nav_account));
 
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_content, new MainContentDemo(), "Main content").commit();
+        fragmentManager.beginTransaction().replace(R.id.fragment_content, new MainContentDemoView(), "Main content").commit();
     }
 }

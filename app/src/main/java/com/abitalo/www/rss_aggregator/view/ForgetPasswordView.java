@@ -49,7 +49,14 @@ public class ForgetPasswordView extends Fragment implements View.OnClickListener
             case R.id.forget_login:
                 gotoLogin();
                 break;
+            case R.id.forget_send:
+                findPassword();
+                break;
         }
+    }
+
+    private void findPassword() {
+        //// TODO:添加找回密码操作 2016/5/9
     }
 
     private void gotoLogin() {
