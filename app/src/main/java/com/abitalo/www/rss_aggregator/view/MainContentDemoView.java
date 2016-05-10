@@ -13,7 +13,7 @@ import com.abitalo.www.rss_aggregator.R;
  * Created by sangzhenya on 2016/5/9.
  * 临时展示登录之后内容的界面
  */
-public class MainContentDemo extends Fragment {
+public class MainContentDemoView extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

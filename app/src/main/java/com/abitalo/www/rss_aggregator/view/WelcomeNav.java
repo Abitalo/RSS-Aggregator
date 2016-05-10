@@ -65,38 +65,4 @@ public class WelcomeNav extends Fragment implements View.OnClickListener {
         fragmentManager.beginTransaction().replace(R.id.fragment_content, new SignInView(), "sign_in").commit();
         drawer.closeDrawer(getActivity().findViewById(R.id.nav_account));
     }
-    /*private void showMenu(){//将来需要使用从云端获得的用户数据作为参数，然后使用adapter根据用户数据填充菜单。。
-        NavigationView navigationView=(NavigationView)getActivity().findViewById(R.id.nav_account);
-        navigationView.addView(new AccountNavigationView(getActivity()));
-        onDestroy();
-    }
-    @Override
-    public String getUserName() {
-        return username.getText().toString();
-    }
-
-    @Override
-    public String getPassword() {
-        return MD5Encrypt.parse(password.getText().toString());
-    }
-
-    @Override
-    public boolean onFailure(String msg) {
-        //getActivity().findViewById(R.id.content_coordinator
-        //用上面的可以滑掉，但不会显示在最上层
-        Snackbar.make(view,msg,Snackbar.LENGTH_SHORT).show();
-        return false;
-    }
-
-    @Override
-    public boolean onSuccess() {
-        showMenu();
-        Snackbar.make(view,"Success!",Snackbar.LENGTH_SHORT).show();
-        return false;
-    }
-
-    @Override
-    public Context getContext() {
-        return super.getContext();
-    }*/
 }
