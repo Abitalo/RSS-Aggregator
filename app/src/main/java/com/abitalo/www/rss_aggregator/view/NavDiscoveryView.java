@@ -1,20 +1,15 @@
 package com.abitalo.www.rss_aggregator.view;
 
-import android.net.http.LoggingEventHandler;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.abitalo.www.rss_aggregator.R;
@@ -27,7 +22,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindCallback;
@@ -65,15 +59,8 @@ public class NavDiscoveryView extends Fragment {
 
         List<Facet> facets = getFacets(data);
         Log.i("NavDiscovery", facets.size()+"");
-//        List<Facet> facets = new ArrayList<>();
-//        for (int i = 1; i < 34; i++){
-//            Facet facet = new Facet();
-//            facet.setFacetName("hhh"+i);
-//            facets.add(facet);
-//        }
-//        FacetAdapter facetListAdapter = new FacetAdapter(getContext(), facets, 1);
-        FacetAdapter facetListAdapter = new FacetAdapter(getContext(), facets);
-//        recyclerView.setAdapter(facetListAdapter);
+
+        FacetAdapter facetListAdapter = new FacetAdapter(getContext(), facets, this);
         recyclerView.setAdapter(facetListAdapter);
 
     }

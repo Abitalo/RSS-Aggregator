@@ -1,6 +1,8 @@
 package com.abitalo.www.rss_aggregator.adapter;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import com.abitalo.www.rss_aggregator.R;
 import com.abitalo.www.rss_aggregator.model.Facet;
+import com.abitalo.www.rss_aggregator.view.SignInView;
 
 import java.util.List;
 
@@ -20,18 +23,21 @@ import java.util.List;
  * recycler适配器
  */
 public class FacetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
-    private Context context;
     private List<Facet> facets;
+    private Context context;
 
     private static final int TYPE_LIST = 1;
     private static final int TYPE_WATERFALL = 2;
     private static final int TYPE_TITLE = 3;
 
-    private int selectedPos = 0;
+    private Fragment fragment;
 
-    public FacetAdapter(Context context, List<Facet> facets) {
+
+    public FacetAdapter(Context context, List<Facet> facets, Fragment fragment) {
         this.context = context;
         this.facets = facets;
+        this.fragment = fragment;
+//        this.fragmentManager = fragmentManager;
     }
 
     @Override
@@ -66,16 +72,16 @@ public class FacetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolder) {
             ((ViewHolder) holder).tvFacetName.setText(facets.get(position).getFacetName());
-//            holder.itemView.setSelected(selectedPos == position);
             holder.itemView.setTag(position);
             //// TODO:需要添加图片的加载解析 2016/5/10
-        } else if (holder instanceof TextViewHolder) {
-
         }
     }
 
     private void showResource(int position) {
         //// TODO:跳转到具体源的页面 2016/5/10
+        FragmentManager fragmentManager = fragment.getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.discovery_nav_view, new SignInView(), "sign_in").commit();
+
         Log.i("Discovery", facets.get(position).getFacetName());
     }
 
@@ -98,7 +104,7 @@ public class FacetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onClick(View v) {
-        Log.i("NavDiscover", v.getTag() + "");
+        showResource((Integer) v.getTag());
     }
 
 
