@@ -60,26 +60,27 @@ public class NavDiscoveryView extends Fragment {
 
     private void initView(String data) {
 //        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.discovery_recycler_card_view);
-        RecyclerView recyclerViewSmall = (RecyclerView) view.findViewById(R.id.discovery_recycler_card_view_small);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.discovery_recycler_card_view);
         final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-        recyclerViewSmall.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 //        recyclerViewSmall.setLayoutManager(new LinearLayoutManager(getContext()));
 //        recyclerViewSmall.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
 //        recyclerViewSmall.setLayoutManager(new StaggeredGridLayoutManager(getContext(),));
 
-//        List<Facet> facets = getFacets(data);
-        List<Facet> facetsSmall = new ArrayList<>();
-        for (int i = 0; i < 9; i++){
-            Facet facet = new Facet();
-            facet.setFacetName("hhh"+i);
-            facetsSmall.add(facet);
-        }
+        List<Facet> facets = getFacets(data);
+        Log.i("NavDiscovery", facets.size()+"");
+//        List<Facet> facets = new ArrayList<>();
+//        for (int i = 1; i < 34; i++){
+//            Facet facet = new Facet();
+//            facet.setFacetName("hhh"+i);
+//            facets.add(facet);
+//        }
 //        FacetAdapter facetListAdapter = new FacetAdapter(getContext(), facets, 1);
-        FacetAdapter facetListAdapterSmall = new FacetAdapter(getContext(), facetsSmall, 3);
+        FacetAdapter facetListAdapter = new FacetAdapter(getContext(), facets);
 //        recyclerView.setAdapter(facetListAdapter);
-        recyclerViewSmall.setAdapter(facetListAdapterSmall);
+        recyclerView.setAdapter(facetListAdapter);
 
     }
 
@@ -116,11 +117,12 @@ public class NavDiscoveryView extends Fragment {
 
         } catch (JSONException e) {
             showToast(e.toString());
-            Log.i("Nav", e.toString()+"---------------------");
+            Log.i("Nav", "::::::::::::::;"+e.toString());
         }
 
         List<Facet> facets = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
+        facets.add(new Facet());
+        for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 jsonObject = jsonArray.getJSONObject(i);
                 Facet facet = new Facet();
@@ -133,7 +135,7 @@ public class NavDiscoveryView extends Fragment {
             }
         }
 
-        Log.i("NavDiscovery", facets.size() + ":::0");
+//        Log.i("NavDiscovery", facets.size() + ":::0");
         return facets;
     }
 }

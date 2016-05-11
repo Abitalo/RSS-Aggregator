@@ -55,7 +55,6 @@ public class WelcomeNav extends Fragment implements View.OnClickListener {
     }
 
     private void addContent() {
-        Log.i("welcome", "here you are");
         drawer.closeDrawer(getActivity().findViewById(R.id.nav_account));
         drawer.openDrawer(getActivity().findViewById(R.id.discovery_nav_view));
     }
