@@ -19,13 +19,15 @@ import java.util.List;
  * Created by sangzhenya on 2016/5/10.
  * recycler适配器
  */
-public class FacetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class FacetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
     private Context context;
     private List<Facet> facets;
 
     private static final int TYPE_LIST = 1;
     private static final int TYPE_WATERFALL = 2;
     private static final int TYPE_TITLE = 3;
+
+    private int selectedPos = 0;
 
     public FacetAdapter(Context context, List<Facet> facets) {
         this.context = context;
@@ -34,60 +36,57 @@ public class FacetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = null;
-        if (viewType == TYPE_LIST){
+        View view;
+        RecyclerView.ViewHolder viewHolder = null;
+        if (viewType == TYPE_LIST) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.facet_card_big, parent, false);
-            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams)view.getLayoutParams();
+            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) view.getLayoutParams();
             layoutParams.setFullSpan(true);
             view.setLayoutParams(layoutParams);
-        }else if (viewType == TYPE_WATERFALL){
+            viewHolder = new ViewHolder(view);
+            view.setOnClickListener(this);
+        } else if (viewType == TYPE_WATERFALL) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.facet_card_small, parent, false);
-            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams)view.getLayoutParams();
+            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) view.getLayoutParams();
             layoutParams.setFullSpan(false);
             view.setLayoutParams(layoutParams);
-        }else if(viewType == TYPE_TITLE){
+            viewHolder = new ViewHolder(view);
+            view.setOnClickListener(this);
+        } else if (viewType == TYPE_TITLE) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.facet_card_title, parent, false);
-            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams)view.getLayoutParams();
+            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) view.getLayoutParams();
             layoutParams.setFullSpan(true);
             view.setLayoutParams(layoutParams);
             return new TextViewHolder(view);
         }
-
-
-  /*      final ViewHolder viewHolder = new ViewHolder(view);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = viewHolder.getPosition();
-                showResource(position);
-            }
-        });*/
-        return new ViewHolder(view);
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(holder instanceof ViewHolder){
-            ((ViewHolder)holder).tvFacetName.setText(facets.get(position).getFacetName());
+        if (holder instanceof ViewHolder) {
+            ((ViewHolder) holder).tvFacetName.setText(facets.get(position).getFacetName());
+//            holder.itemView.setSelected(selectedPos == position);
+            holder.itemView.setTag(position);
             //// TODO:需要添加图片的加载解析 2016/5/10
-        }else if (holder instanceof TextViewHolder){
+        } else if (holder instanceof TextViewHolder) {
 
         }
     }
 
     private void showResource(int position) {
         //// TODO:跳转到具体源的页面 2016/5/10
-        Log.i("Discovery",facets.get(position).getFacetName());
+        Log.i("Discovery", facets.get(position).getFacetName());
     }
 
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0){
+        if (position == 0) {
             return TYPE_TITLE;
-        }else if(position > 0 && position <= 6){
+        } else if (position > 0 && position <= 6) {
             return TYPE_LIST;
-        }else{
+        } else {
             return TYPE_WATERFALL;
         }
     }
@@ -97,8 +96,13 @@ public class FacetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return facets.size();
     }
 
+    @Override
+    public void onClick(View v) {
+        Log.i("NavDiscover", v.getTag() + "");
+    }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvFacetName;
         public ImageView ivFacetImage;
 
@@ -110,7 +114,7 @@ public class FacetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    public static class TextViewHolder extends RecyclerView.ViewHolder{
+    public static class TextViewHolder extends RecyclerView.ViewHolder {
 
         public TextViewHolder(View itemView) {
             super(itemView);
