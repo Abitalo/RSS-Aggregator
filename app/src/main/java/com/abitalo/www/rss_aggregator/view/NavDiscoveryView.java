@@ -59,15 +59,9 @@ public class NavDiscoveryView extends Fragment {
     }
 
     private void initView(String data) {
-//        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.discovery_recycler_card_view);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.discovery_recycler_card_view);
         final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        recyclerViewSmall.setLayoutManager(new LinearLayoutManager(getContext()));
-//        recyclerViewSmall.setLayoutManager(new GridLayoutManager(getContext(), 3));
-
-//        recyclerViewSmall.setLayoutManager(new StaggeredGridLayoutManager(getContext(),));
 
         List<Facet> facets = getFacets(data);
         Log.i("NavDiscovery", facets.size()+"");
