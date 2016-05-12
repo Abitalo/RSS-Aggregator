@@ -14,4 +14,17 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="BlueButton">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">@drawable/button_shape</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="ExploreButton">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">@drawable/explore_button_shape</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>

@@ -12,10 +12,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.abitalo.www.rss_aggregator.constants.Conf;
+import com.abitalo.www.rss_aggregator.view.NavDiscoveryView;
 import com.abitalo.www.rss_aggregator.view.WelcomeNav;
 
 import cn.bmob.v3.Bmob;
-
 
 public class MainActivity extends AppCompatActivity {
     //用于作为参数传给子线程，子线程使用该handler异步更新主线程UI或向主线程传送消息
@@ -50,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        fragmentManager.beginTransaction().add(R.id.login_nav_account, new WelcomeNav(), "account_nav").commit();
+        fragmentManager.beginTransaction().add(R.id.nav_account, new WelcomeNav(), "account_nav").commit();
+        fragmentManager.beginTransaction().add(R.id.discovery_nav_view, new NavDiscoveryView(), "discovery_view").commit();
     }
 
     @Override
@@ -65,24 +66,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.dragger_main_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 }
