@@ -4,6 +4,7 @@ package com.abitalo.www.rss_aggregator.presenter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.abitalo.www.rss_aggregator.constants.Messages;
 import com.abitalo.www.rss_aggregator.util.RSSHandler;
@@ -73,6 +74,7 @@ public class RSSParser extends Thread{
             msg.what= Messages.RSS_PARSE_SUCCESS;
             msg.setData(bundle);
             handler.sendMessage(msg);
+            Log.e("LOGCAT", "5555555555555555555555555555555555555555555555555555555556sad5asdasdsada");
         } catch (Exception e) {
             e.printStackTrace();
             Message msg = new Message();
