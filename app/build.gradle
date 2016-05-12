@@ -37,4 +37,5 @@ dependencies {
     compile 'com.android.support:support-v4:23.2.1'
     //注:bmob-sdk:3.4.6需要依赖okhttp（2.4.0）、okio（2.4.0），如果需要兼容Android6.0系统，则还需要添加support-v4（23.2.1）及org.apache.http.legacy包，具体可查看下面注释[1]的解释
     compile 'com.android.support:cardview-v7:23.3.0'
+    compile 'com.android.support:support-v4:23.3.0'
 }

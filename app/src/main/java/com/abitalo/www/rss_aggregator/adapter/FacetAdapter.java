@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.abitalo.www.rss_aggregator.R;
 import com.abitalo.www.rss_aggregator.model.Facet;
+import com.abitalo.www.rss_aggregator.view.RssSourceView;
 import com.abitalo.www.rss_aggregator.view.SignInView;
 
 import java.util.List;
@@ -80,7 +81,7 @@ public class FacetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private void showResource(int position) {
         //// TODO:跳转到具体源的页面 2016/5/10
         FragmentManager fragmentManager = fragment.getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.discovery_nav_view, new SignInView(), "sign_in").commit();
+        fragmentManager.beginTransaction().replace(R.id.nav_discovery_main, new RssSourceView(1), "rss_source").commit();
 
         Log.i("Discovery", facets.get(position).getFacetName());
     }

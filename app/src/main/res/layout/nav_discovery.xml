@@ -13,12 +13,14 @@
         android:elevation="5dp"
         android:iconifiedByDefault="true"
         android:queryHint="Search for RSS source" />
-
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/discovery_recycler_card_view"
+    <FrameLayout
+        android:id="@+id/nav_discovery_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical" />
+        android:layout_height="wrap_content">
+
+
+    </FrameLayout>
+
+
 
 </LinearLayout>
