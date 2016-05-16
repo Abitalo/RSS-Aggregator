@@ -94,7 +94,7 @@ public class RssSourceView extends Fragment {
         List<RssSource> rssSources = getFacets(msg);
         Log.i("NavDiscovery", rssSources.size() + "::;;;;");
 
-        RssSourceAdapter rssSourceAdapter = new RssSourceAdapter(rssSources);
+        RssSourceAdapter rssSourceAdapter = new RssSourceAdapter(getContext(),rssSources);
         recyclerView.setAdapter(rssSourceAdapter);
     }
     private void showToast(String msg) {
@@ -119,6 +119,7 @@ public class RssSourceView extends Fragment {
                 jsonObject = jsonArray.getJSONObject(i);
                 RssSource rssSource = new RssSource();
                 rssSource.setId(Integer.parseInt(jsonObject.get("id").toString()));
+                rssSource.setRssName(jsonObject.get("rssName").toString());
 //                        facet.setBackgroundUrl(jsonObject.get("facetImage").toString());
                 rssSources.add(rssSource);
             } catch (JSONException e) {

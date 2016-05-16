@@ -78,13 +78,7 @@ public class FacetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    private void showResource(int position) {
-        //// TODO:跳转到具体源的页面 2016/5/10
-        FragmentManager fragmentManager = fragment.getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.nav_discovery_main, new RssSourceView(1), "rss_source").commit();
 
-        Log.i("Discovery", facets.get(position).getFacetName());
-    }
 
 
     @Override
@@ -106,6 +100,14 @@ public class FacetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onClick(View v) {
         showResource((Integer) v.getTag());
+    }
+
+    private void showResource(int position) {
+        //// TODO:跳转到具体源的页面 2016/5/10
+        FragmentManager fragmentManager = fragment.getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.nav_discovery_main, new RssSourceView(1), "rss_source").commit();
+
+        Log.i("Discovery", facets.get(position).getFacetName());
     }
 
 

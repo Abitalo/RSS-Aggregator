@@ -4,23 +4,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--建议重写-->
-    <SearchView
-        android:id="@+id/discovery_search_view"
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="@drawable/background_with_shadow"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@android:color/background_light"
-        android:elevation="5dp"
-        android:iconifiedByDefault="true"
-        android:queryHint="Search for RSS source" />
+        android:layout_height="60dp">
+        <EditText
+            android:id="@+id/search_input"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:hint="Type you feed or word here ..."
+            android:layout_width="match_parent"
+            android:layout_weight="0.8"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/search_icon"
+            android:contentDescription="@string/add_content"
+            android:src="@mipmap/search"
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="15dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+    </LinearLayout>
     <FrameLayout
         android:id="@+id/nav_discovery_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-
     </FrameLayout>
-
-
-
 </LinearLayout>
