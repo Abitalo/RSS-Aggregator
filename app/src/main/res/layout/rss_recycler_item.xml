@@ -15,7 +15,7 @@
         android:layout_marginStart="10dp"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/rss_icon"
-        android:id="@+id/textView2" />
+        android:id="@+id/rss_title_source" />
 
     <TextView
         android:text="93K readers"
@@ -28,10 +28,11 @@
         android:layout_alignBottom="@+id/rss_icon"
         android:layout_toEndOf="@+id/rss_icon" />
     <ImageView
+        android:id="@+id/rss_add_source"
         android:src="@mipmap/plus"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginEnd="45dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginTop="10dp"
         android:layout_alignParentEnd="true" />
 </RelativeLayout>
