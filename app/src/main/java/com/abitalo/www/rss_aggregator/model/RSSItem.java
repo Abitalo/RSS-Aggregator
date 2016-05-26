@@ -8,12 +8,14 @@ import java.util.ArrayList;
 /**
  * Created by Zela on 2016/5/5.
  */
-public class RSSItem implements Parcelable {
-    private String title;
-    private String pubdate;
-    private ArrayList<String> categories;
-    private String link;
-    private String description;
+public class RSSItem implements Parcelable{
+    private String title = null;
+    private String pubdate = null;
+    private ArrayList<String> categories = null;
+    private String link = null;
+    private String description = null;
+    private String encoded = null;
+    private String author = null;
 
     protected RSSItem(Parcel in) {
         title = in.readString();
@@ -40,9 +42,9 @@ public class RSSItem implements Parcelable {
     }
 
     public String getTitle() {
-        if (title.length() > 20) {
-            return title.substring(0, 19) + "...";
-        }
+//        if (title.length() > 20) {
+//            return title.substring(0, 19) + "...";
+//        }
         return title;
     }
 
@@ -82,12 +84,29 @@ public class RSSItem implements Parcelable {
         this.categories = categories;
     }
 
+    public String getEncoded() {
+        return encoded;
+    }
+
+    public void setEncoded(String encoded) {
+        this.encoded = encoded;
+    }
+
     public void addCategory(String category) {
         if(null == categories){
             categories = new ArrayList<String>();
         }
         categories.add(category);
     }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
 
     @Override
 

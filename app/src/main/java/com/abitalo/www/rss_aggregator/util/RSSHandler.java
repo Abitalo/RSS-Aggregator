@@ -25,7 +25,8 @@ public class RSSHandler extends DefaultHandler {
     final int RSS_CATEGORY = 3;
     final int RSS_PUBDATE = 4;
     final int RSS_DESCRIPTION = 5;
-
+    final int RSS_ENCODED = 6;
+    final int RSS_AUTHOR = 7;
     int currentFlag = 0;
 
     public RSSHandler() {
@@ -48,16 +49,19 @@ public class RSSHandler extends DefaultHandler {
             throws SAXException {
         super.characters(ch, start, length);
         // 获取字符串
-        String text = new String(ch, start, length);
-        Log.i("i", "要获取的内容：" + text);
-        if(text.trim().equals("")) return;
-        if(0!=currentFlag) stringBuffer.append(text);
+//        Log.i("i", "要获取的内容： 测试回车" + ch);
+        if (0 != currentFlag && stringBuffer!=null) {
+            for (int i=start; i<start+length; i++) {
+                stringBuffer.append(ch[i]);
+            }
+        }
     }
 
     @Override
     public void startElement(String uri, String localName, String qName,
                              Attributes attributes) throws SAXException {
         super.startElement(uri, localName, qName, attributes);
+//        Log.e("LOGCAT", "tag:" + localName);
         if ("channel".equals(localName)) {
             currentFlag = 0;
             return;
@@ -87,15 +91,22 @@ public class RSSHandler extends DefaultHandler {
             currentFlag = RSS_CATEGORY;
             return;
         }
+        if("encoded".equals(localName)){
+            currentFlag = RSS_ENCODED;
+            return;
+        }
+        if("author".equals(localName)){
+            currentFlag = RSS_AUTHOR;
+            return;
+        }
     }
 
     @Override
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
         super.endElement(uri, localName, qName);
-        String string = stringBuffer.toString().replace("&nbsp;","");
-        string = string.replaceAll("\\s*","");
-        Log.e("LOGCAT", "内容：" + "DD"+string+"RR");
+        String string = stringBuffer.toString();
+//        Log.e("LOGCAT", "内容：" +string);
         stringBuffer.delete(0,stringBuffer.length());
         if ("item".equals(localName)) {
             isInItem = false;
@@ -135,6 +146,19 @@ public class RSSHandler extends DefaultHandler {
         else if ("category".equals(localName)) {
             if(isInItem)
                 rssItem.addCategory(string);
+            currentFlag = 0;
+            return;
+        }
+        else if("encoded".equals(localName)){
+            if(isInItem)
+                rssItem.setEncoded(string);
+            currentFlag= 0 ;
+            return;
+        }
+        else if("author".equals(localName)){
+            if(isInItem){
+                rssItem.setAuthor(string);
+            }
             currentFlag = 0;
             return;
         }
