@@ -30,13 +30,19 @@ public class WelcomeNav extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.nav_welcome, container, false);
+        btnLogin = (Button) view.findViewById(R.id.welcomeLogin);
+        if(null == view) {
+            Log.e("LOGCAT", "操你爸！！！！！！！！！！！！！！！！！！！！！");
+        }
+        if(null == btnLogin) {
+            Log.e("LOGCAT", "操你妈！！！！！！！！！！！！！！！！！！！！！");
+        }
+        btnAddContent = (Button) view.findViewById(R.id.addContent);
         initialView();
         return view;
     }
 
     private void initialView(){
-        btnLogin = (Button) view.findViewById(R.id.welcomeLogin);
-        btnAddContent = (Button) view.findViewById(R.id.addContent);
         btnLogin.setOnClickListener(this);
         btnAddContent.setOnClickListener(this);
         drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
