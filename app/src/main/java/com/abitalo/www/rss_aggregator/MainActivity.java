@@ -1,5 +1,7 @@
 package com.abitalo.www.rss_aggregator;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
@@ -8,10 +10,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.abitalo.www.rss_aggregator.constants.Conf;
+import com.abitalo.www.rss_aggregator.presenter.AccountPresenter;
 import com.abitalo.www.rss_aggregator.view.NavDiscoveryView;
 import com.abitalo.www.rss_aggregator.view.WelcomeNav;
 
@@ -23,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     //维护一个fragment回退栈，栈顶显示到content_main中
     //具体的UI都写在单独的Fragment里面
     FragmentManager fragmentManager = null;
+    private AccountPresenter accountPresenter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,11 @@ public class MainActivity extends AppCompatActivity {
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+        SharedPreferences sharedPreferences= getSharedPreferences("userAuthentication",
+                Activity.MODE_PRIVATE);
+        String name =sharedPreferences.getString("name", "");
+        Log.i("MainActivity", name);
 
         fragmentManager.beginTransaction().add(R.id.nav_account, new WelcomeNav(), "account_nav").commit();
         fragmentManager.beginTransaction().add(R.id.discovery_nav_view, new NavDiscoveryView(), "discovery_view").commit();
@@ -80,4 +91,13 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void onSuccess(){
+
+    }
+
+    public void onFailure(){
+
+    }
+
 }

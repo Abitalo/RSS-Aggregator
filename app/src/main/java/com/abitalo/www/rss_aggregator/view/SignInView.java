@@ -1,5 +1,6 @@
 package com.abitalo.www.rss_aggregator.view;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -98,7 +99,6 @@ public class SignInView extends Fragment implements View.OnClickListener, IAccou
     }
 
     private void login() {
-        Log.i("SignInView", "Is here visited ?");
         presenter.login();
     }
 
@@ -122,6 +122,11 @@ public class SignInView extends Fragment implements View.OnClickListener, IAccou
     public boolean onSuccess() {
         showMenu();
         Snackbar.make(view, "Success!", Snackbar.LENGTH_SHORT).show();
+        SharedPreferences mySharedPreferences= getContext().getSharedPreferences("userAuthentication",
+                getContext().MODE_PRIVATE);
+        SharedPreferences.Editor editor = mySharedPreferences.edit();
+        editor.putString("name", getUserName());
+        editor.commit();
         return false;
     }
 }

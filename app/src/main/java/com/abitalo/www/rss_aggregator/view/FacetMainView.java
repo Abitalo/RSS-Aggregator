@@ -77,8 +77,6 @@ public class FacetMainView extends Fragment {
                 message.what = 1;
                 handler.sendMessage(message);
             }
-
-
             @Override
             public void onFailure(int arg0, String arg1) {
                 showToast("查询失败:" + arg1);

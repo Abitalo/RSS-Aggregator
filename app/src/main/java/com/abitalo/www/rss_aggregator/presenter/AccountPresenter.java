@@ -1,5 +1,6 @@
 package com.abitalo.www.rss_aggregator.presenter;
 
+import com.abitalo.www.rss_aggregator.MainActivity;
 import com.abitalo.www.rss_aggregator.view.IAccountView;
 
 import cn.bmob.v3.BmobUser;
