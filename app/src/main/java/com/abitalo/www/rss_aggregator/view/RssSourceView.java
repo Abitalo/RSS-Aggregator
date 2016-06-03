@@ -109,7 +109,6 @@ public class RssSourceView extends Fragment {
 
         } catch (JSONException e) {
             showToast(e.toString());
-            Log.i("Nav", "::::::::::::::;" + e.toString());
         }
 
         List<RssSource> rssSources = new ArrayList<>();

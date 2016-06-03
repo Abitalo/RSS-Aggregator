@@ -1,5 +1,6 @@
 package com.abitalo.www.rss_aggregator.view;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -123,10 +124,10 @@ public class SignInView extends Fragment implements View.OnClickListener, IAccou
         showMenu();
         Snackbar.make(view, "Success!", Snackbar.LENGTH_SHORT).show();
         SharedPreferences mySharedPreferences= getContext().getSharedPreferences("userAuthentication",
-                getContext().MODE_PRIVATE);
+                Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = mySharedPreferences.edit();
         editor.putString("name", getUserName());
-        editor.commit();
+        editor.apply();
         return false;
     }
 }

@@ -1,35 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
-    </group>
-
-    <item android:title="Communicate">
+    <item android:title="请选择">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/nav_addUser"
+                android:icon="@mipmap/adduser"
+                android:title="添加用户" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_logout"
+                android:icon="@mipmap/exit"
+                android:title="退出" />
+        </menu>
+    </item>
+    <item android:title="常用">
+        <menu>
+            <item
+                android:id="@+id/nav_homepage"
+                android:icon="@mipmap/homepage"
+                android:title="主页" />
+            <item
+                android:id="@+id/nav_menu"
+                android:icon="@mipmap/menu"
+                android:title="全部文章" />
+            <item
+                android:id="@+id/nav_star"
+                android:icon="@mipmap/start"
+                android:title="星标文章" />
+            <item
+                android:id="@+id/nav_storage"
+                android:icon="@mipmap/storage"
+                android:title="已保存网页" />
+        </menu>
+    </item>
+
+    <item android:title="订阅源">
+        <menu>
+            <item
+                android:id="@+id/nav_rss_resource"
+                android:icon="@mipmap/rss"
+                android:title="小众软件" />
+        </menu>
+    </item>
+
+    <item android:title="其他">
+        <menu>
+            <item
+                android:id="@+id/nav_theme"
+                android:icon="@mipmap/theme"
+                android:title="主题" />
+            <item
+                android:id="@+id/nav_rss"
+                android:icon="@mipmap/rss"
+                android:title="编辑订阅" />
+            <item
+                android:id="@+id/nav_setting"
+                android:icon="@mipmap/setting"
+                android:title="设置" />
         </menu>
     </item>
 

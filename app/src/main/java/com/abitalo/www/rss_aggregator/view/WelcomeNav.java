@@ -1,22 +1,15 @@
 package com.abitalo.www.rss_aggregator.view;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.abitalo.www.rss_aggregator.R;
-import com.abitalo.www.rss_aggregator.presenter.AccountPresenter;
-import com.abitalo.www.rss_aggregator.util.MD5Encrypt;
 
 /**
  * Created by Lancelot on 2016/5/3.
