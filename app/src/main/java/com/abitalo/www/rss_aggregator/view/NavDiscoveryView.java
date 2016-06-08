@@ -34,7 +34,7 @@ import cn.bmob.v3.listener.FindCallback;
 
 /**
  * Created by sangzhenya on 2016/5/10.
- * 添加内容界面
+ * APP右侧展示源信息的界面
  */
 public class NavDiscoveryView extends Fragment {
     View view = null;

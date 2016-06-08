@@ -4,6 +4,7 @@ import cn.bmob.v3.BmobUser;
 
 /**
  * Created by Lancelot on 2016/5/4.
+ * 用户实体类
  */
 public class MeetUser extends BmobUser {
 

@@ -89,13 +89,14 @@ public class SignInView extends Fragment implements View.OnClickListener, IAccou
 
     }
 
-    private void showMenu() {//将来需要使用从云端获得的用户数据作为参数，然后使用adapter根据用户数据填充菜单。。
-        NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_account);
+    private void showMenu() {
+        //将来需要使用从云端获得的用户数据作为参数，然后使用adapter根据用户数据填充菜单。。
+        /*NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_account);
         navigationView.addView(new AccountNavigationView(getActivity()));
+        drawer.openDrawer(getActivity().findViewById(R.id.nav_account));*/
         onDestroy();
-        drawer.openDrawer(getActivity().findViewById(R.id.nav_account));
-
         FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.nav_account, new UserAccountView(), "user_account").commit();
         fragmentManager.beginTransaction().replace(R.id.fragment_content, new MainContentDemoView(), "Main content").commit();
     }
 

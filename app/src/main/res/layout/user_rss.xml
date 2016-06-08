@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="55dp"
+    android:background="#555"
+    android:orientation="vertical">
+    <com.yalantis.phoenix.PullToRefreshView
+        android:id="@+id/pull_to_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.yydcdut.sdlv.SlideAndDragListView
+            android:id="@+id/user_rss_display"
+            android:background="#ccc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </com.yydcdut.sdlv.SlideAndDragListView>
+    </com.yalantis.phoenix.PullToRefreshView>
+</LinearLayout>

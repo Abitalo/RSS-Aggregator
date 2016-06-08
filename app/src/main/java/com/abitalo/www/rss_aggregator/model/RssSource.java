@@ -4,6 +4,7 @@ import cn.bmob.v3.BmobObject;
 
 /**
  * Created by sangz on 2016/5/12.
+ * 源实体类
  */
 public class RssSource extends BmobObject {
     private int id;

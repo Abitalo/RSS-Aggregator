@@ -8,4 +8,9 @@
     <dimen name="fab_margin">16dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="textsize_primary_large">32sp</dimen>
+
+    <dimen name="slv_item_bg_btn_width">48dip</dimen>
+    <dimen name="txt_size">7sp</dimen>
+    <dimen name="slv_item_height">66dip</dimen>
+    <dimen name="slv_item_bg_btn_width_img">100dip</dimen>
 </resources>

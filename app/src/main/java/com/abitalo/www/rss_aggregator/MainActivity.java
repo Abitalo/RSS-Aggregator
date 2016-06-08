@@ -19,6 +19,7 @@ import com.abitalo.www.rss_aggregator.constants.Conf;
 import com.abitalo.www.rss_aggregator.presenter.AccountPresenter;
 import com.abitalo.www.rss_aggregator.view.AccountNavigationView;
 import com.abitalo.www.rss_aggregator.view.NavDiscoveryView;
+import com.abitalo.www.rss_aggregator.view.UserAccountView;
 import com.abitalo.www.rss_aggregator.view.WelcomeNav;
 
 import cn.bmob.v3.Bmob;
@@ -62,10 +63,12 @@ public class MainActivity extends AppCompatActivity {
                 Activity.MODE_PRIVATE);
         String name =sharedPreferences.getString("name", "");
 
-        if(name.length() > 0){
+        if(name.length() > 0){/*
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_account);
             assert navigationView != null;
-            navigationView.addView(new AccountNavigationView(this));
+            navigationView.addView(new AccountNavigationView(this));*/
+            fragmentManager.beginTransaction().add(R.id.nav_account, new UserAccountView(), "user_account").commit();
+
         }else{
             fragmentManager.beginTransaction().add(R.id.nav_account, new WelcomeNav(), "account_nav").commit();
         }
@@ -76,9 +79,12 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         assert drawer != null;
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }else if (drawer.isDrawerOpen(GravityCompat.END)){
+            drawer.closeDrawer(GravityCompat.END);
+        }else {
             super.onBackPressed();
         }
     }
@@ -96,8 +102,6 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
-
 }

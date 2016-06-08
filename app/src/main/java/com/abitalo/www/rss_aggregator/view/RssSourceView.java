@@ -4,18 +4,18 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.abitalo.www.rss_aggregator.R;
-import com.abitalo.www.rss_aggregator.adapter.FacetAdapter;
 import com.abitalo.www.rss_aggregator.adapter.RssSourceAdapter;
-import com.abitalo.www.rss_aggregator.model.Facet;
 import com.abitalo.www.rss_aggregator.model.RssSource;
 
 import org.json.JSONArray;
@@ -30,6 +30,7 @@ import cn.bmob.v3.listener.FindCallback;
 
 /**
  * Created by sangz on 2016/5/12.
+ * 源信息列表展示
  */
 public class RssSourceView extends Fragment {
     private View view;
@@ -69,13 +70,11 @@ public class RssSourceView extends Fragment {
         query.findObjects(getContext(), new FindCallback() {
             @Override
             public void onSuccess(JSONArray arg0) {
-                Log.i("RssSource", arg0.toString());
                 Message message = new Message();
                 Bundle bundle = new Bundle();
                 bundle.putString("msg", arg0.toString());
                 message.setData(bundle);
                 message.what = 1;
-                Log.i("Rss", arg0.toString());
                 handler.sendMessage(message);
             }
 
@@ -92,7 +91,6 @@ public class RssSourceView extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         List<RssSource> rssSources = getFacets(msg);
-        Log.i("NavDiscovery", rssSources.size() + "::;;;;");
 
         RssSourceAdapter rssSourceAdapter = new RssSourceAdapter(getContext(),rssSources);
         recyclerView.setAdapter(rssSourceAdapter);
@@ -125,9 +123,33 @@ public class RssSourceView extends Fragment {
                 e.printStackTrace();
             }
         }
-
-//        Log.i("NavDiscovery", facets.size() + ":::0");
         return rssSources;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i("RssSourceView", "here you are");
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.nav_discovery_main, new FacetMainView(), "facet").commit();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i("RssSourceView", "here you are !!!");
+    }
+
 
 }

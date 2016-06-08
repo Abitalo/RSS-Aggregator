@@ -28,6 +28,7 @@ import cn.bmob.v3.listener.FindCallback;
 
 /**
  * Created by sangz on 2016/5/12.
+ * 加载具源分类
  */
 public class FacetMainView extends Fragment {
     private View view;
@@ -58,7 +59,6 @@ public class FacetMainView extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         List<Facet> facets = getFacets(data);
-        Log.i("NavDiscovery", facets.size() + "");
 
         FacetAdapter facetListAdapter = new FacetAdapter(getContext(), facets, this);
         recyclerView.setAdapter(facetListAdapter);
@@ -91,17 +91,17 @@ public class FacetMainView extends Fragment {
 
     public List<Facet> getFacets(String data) {
         JSONArray jsonArray = null;
-        JSONObject jsonObject = null;
+        JSONObject jsonObject;
         try {
             jsonArray = new JSONArray(data);
 
         } catch (JSONException e) {
             showToast(e.toString());
-            Log.i("Nav", "::::::::::::::;" + e.toString());
         }
 
         List<Facet> facets = new ArrayList<>();
         facets.add(new Facet());
+        assert jsonArray != null;
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 jsonObject = jsonArray.getJSONObject(i);
@@ -114,8 +114,6 @@ public class FacetMainView extends Fragment {
                 e.printStackTrace();
             }
         }
-
-//        Log.i("NavDiscovery", facets.size() + ":::0");
         return facets;
     }
 }

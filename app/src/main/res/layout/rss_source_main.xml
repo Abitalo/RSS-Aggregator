@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 源信息列表 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,8 +7,6 @@
     android:orientation="vertical">
     <android.support.v7.widget.RecyclerView
         android:scrollbars="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
         android:id="@+id/rss_source_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

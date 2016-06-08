@@ -21,11 +21,10 @@ import java.util.List;
 
 /**
  * Created by sangzhenya on 2016/5/10.
- * recycler适配器
+ * 源分类列表适配器
  */
 public class FacetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
     private List<Facet> facets;
-    private Context context;
 
     private static final int TYPE_LIST = 1;
     private static final int TYPE_WATERFALL = 2;
@@ -33,9 +32,7 @@ public class FacetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private Fragment fragment;
 
-
     public FacetAdapter(Context context, List<Facet> facets, Fragment fragment) {
-        this.context = context;
         this.facets = facets;
         this.fragment = fragment;
 //        this.fragmentManager = fragmentManager;
@@ -103,28 +100,22 @@ public class FacetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     private void showResource(int position) {
-        //// TODO:跳转到具体源的页面 2016/5/10
         FragmentManager fragmentManager = fragment.getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.nav_discovery_main, new RssSourceView(1), "rss_source").commit();
-
-        Log.i("Discovery", facets.get(position).getFacetName());
     }
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvFacetName;
         public ImageView ivFacetImage;
-
         public ViewHolder(View itemView) {
             super(itemView);
-
             tvFacetName = (TextView) itemView.findViewById(R.id.big_facet_card_title);
 //            ivFacetImage = (ImageView) itemView.findViewById(R.id.big_facet_card_image);
         }
     }
 
     public static class TextViewHolder extends RecyclerView.ViewHolder {
-
         public TextViewHolder(View itemView) {
             super(itemView);
         }

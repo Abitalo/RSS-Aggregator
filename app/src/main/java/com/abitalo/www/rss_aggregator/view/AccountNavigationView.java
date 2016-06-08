@@ -16,6 +16,7 @@ import com.abitalo.www.rss_aggregator.R;
 
 /**
  * Created by Lancelot on 2016/5/4.
+ * 登录后右侧的显示布局
  */
 public class AccountNavigationView extends NavigationView implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private ImageView imageView;

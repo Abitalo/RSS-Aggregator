@@ -8,6 +8,7 @@ import cn.bmob.v3.listener.SaveListener;
 
 /**
  * Created by Lancelot on 2016/5/4.
+ * 登录代理者
  */
 public class AccountPresenter {
     IAccountView iAccountView=null;

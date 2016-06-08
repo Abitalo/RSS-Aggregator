@@ -4,7 +4,7 @@ import cn.bmob.v3.BmobObject;
 
 /**
  * Created by sangzhenya on 2016/5/9.
- * 实体类
+ * 分类实体类
  */
 public class Facet extends BmobObject {
     private int id;

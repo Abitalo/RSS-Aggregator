@@ -13,7 +13,7 @@ import com.abitalo.www.rss_aggregator.R;
 
 /**
  * Created by Lancelot on 2016/5/3.
- * 左划拉出的欢迎界面
+ * 欢迎界面
  */
 public class WelcomeNav extends Fragment implements View.OnClickListener {
     View view = null;
