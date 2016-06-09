@@ -26,9 +26,10 @@ public class AccountPresenter {
     }
 
     private void loginValidated(String username, String password) {
-        BmobUser user = new BmobUser();
+        final BmobUser user = new BmobUser();
         user.setUsername(username);
         user.setPassword(password);
+
         user.login(iAccountView.getContext(), new SaveListener() {
             @Override
             public void onSuccess() {

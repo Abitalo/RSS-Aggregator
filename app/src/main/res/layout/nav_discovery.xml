@@ -3,21 +3,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_marginTop="20dp"
+        android:paddingTop="50dp"
         android:background="@drawable/background_with_shadow"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
-        <EditText
+        android:layout_height="120dp">
+        <ImageView
+            android:id="@+id/back_icon"
+            android:layout_width="25dp"
+            android:layout_marginTop="13dp"
+            android:src="@mipmap/left"
+            android:layout_marginStart="10dp"
+            android:layout_height="25dp" />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0.7"
             android:id="@+id/search_input"
-            android:padding="10dp"
-            android:layout_margin="10dp"
-            android:hint="Search..."
-            android:layout_width="match_parent"
-            android:layout_weight="0.8"
-            android:layout_height="wrap_content" />
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="Search..."/>
         <ImageView
             android:id="@+id/search_icon"
             android:contentDescription="@string/add_content"

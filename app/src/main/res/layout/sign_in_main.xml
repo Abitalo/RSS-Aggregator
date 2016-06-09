@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 登录界面 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/login"
     android:orientation="vertical">
 
@@ -14,47 +15,40 @@
         android:textStyle="bold"
         android:textSize="25sp"
         android:layout_marginTop="70dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_gravity="center_horizontal"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="300dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/login_desc"
-        android:id="@+id/edit_login_name"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/edit_user_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:hint="@string/user_name" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="300dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/edit_login_name"
-        android:id="@+id/edit_login_pass"
+    <com.rengwuxian.materialedittext.MaterialEditText
+        app:met_underlineColor="#666"
+        app:met_textColorHint="#666"
         android:layout_marginTop="10dp"
-        android:layout_height="wrap_content">
+        android:layout_width="300dp"
+        app:met_floatingLabel="highlight"
+        app:met_floatingLabelText="@string/password"
+        android:id="@+id/edit_user_name"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:hint="@string/password"/>
 
-        <EditText
-            android:id="@+id/edit_user_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="@string/password" />
-    </android.support.design.widget.TextInputLayout>
+    <com.rengwuxian.materialedittext.MaterialEditText
+        app:met_underlineColor="#666"
+        app:met_textColorHint="#666"
+        android:layout_marginTop="10dp"
+        android:layout_width="300dp"
+        app:met_floatingLabel="highlight"
+        app:met_floatingLabelText="@string/password"
+        android:id="@+id/edit_user_password"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="@string/password"/>
 
     <Button
         android:id="@+id/login_login"
         style="@style/BlueButton"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edit_login_pass"
-        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:text="@string/login"
         android:textSize="15sp" />
@@ -65,16 +59,16 @@
         android:id="@+id/login_forget"
         android:layout_height="wrap_content"
         android:text="@string/forget_password"
-        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        android:layout_below="@+id/login_login" />
+        android:textSize="15sp"/>
 
     <TextView
         android:layout_width="300dp"
         android:id="@+id/login_sign"
+        android:textSize="15sp"
         android:layout_height="wrap_content"
         android:text="@string/new_sign_up"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/login_forget" />
-</RelativeLayout>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"/>
+</LinearLayout>

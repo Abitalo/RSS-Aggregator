@@ -7,34 +7,27 @@
     android:background="@drawable/item_selector">
 
     <ImageView
-        android:id="@+id/img_item_edit"
+        android:id="@+id/img_user_rss"
         android:layout_width="36dp"
         android:layout_height="36dp"
+        android:src="@mipmap/rss"
         android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"/>
 
     <TextView
-        android:id="@+id/txt_item_edit"
+        android:id="@+id/tv_user_rss"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/slv_item_height"
-        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:text="Test"
+        android:layout_toEndOf="@+id/img_user_rss"
+        android:layout_marginStart="20dp"
         android:layout_centerVertical="true"
         android:alpha="0.87"
         android:lines="1"
         android:textColor="@android:color/black"
         android:textSize="14sp"/>
-
-    <Button
-        android:id="@+id/btn_item_click"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
-        android:focusable="false"/>
 
 </RelativeLayout>

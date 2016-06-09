@@ -1,10 +1,12 @@
 package com.abitalo.www.rss_aggregator.view;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -37,7 +39,10 @@ import cn.bmob.v3.listener.FindCallback;
  * APP右侧展示源信息的界面
  */
 public class NavDiscoveryView extends Fragment {
-    View view = null;
+    private View view = null;
+
+    private FragmentManager fragmentManager;
+    private DrawerLayout drawer;
 
 
     @Nullable
@@ -49,10 +54,11 @@ public class NavDiscoveryView extends Fragment {
     }
 
     private void initView() {
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.nav_discovery_main, new FacetMainView(), "discovery_view").commit();
+        fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().add(R.id.nav_discovery_main, new FacetMainView(), "facet_view").commit();
         EditText etSearchInput = (EditText) view.findViewById(R.id.search_input);
         ImageView ivSearchButton = (ImageView) view.findViewById(R.id.search_icon);
+        ImageView ivBackButton = (ImageView) view.findViewById(R.id.back_icon);
 
         etSearchInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -71,6 +77,22 @@ public class NavDiscoveryView extends Fragment {
                 submitText();
             }
         });
+        ivBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backToLast();
+            }
+        });
+    }
+
+    private void backToLast() {
+        Fragment fragment = fragmentManager.findFragmentByTag("facet_view");
+        if (fragment != null && fragmentManager.findFragmentByTag("facet_view").isVisible()) {
+            drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(getActivity().findViewById(R.id.discovery_nav_view));
+        } else {
+            fragmentManager.beginTransaction().replace(R.id.nav_discovery_main, new FacetMainView(), "facet_view").commit();
+        }
     }
 
     private void submitText() {

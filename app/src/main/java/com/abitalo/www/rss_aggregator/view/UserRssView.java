@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,7 +60,7 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
             }
         });
         initData();
-        initMeun();
+        initMenu();
         initUiAndListener();
     }
 
@@ -82,19 +81,27 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
         mListView.setOnListScrollListener(this);
     }
 
-    private void initMeun() {
+    private void initMenu() {
         mMenu = new Menu(true, true);
-        mMenu.addItem(new MenuItem.Builder().setWidth((int) getResources().getDimension(R.dimen.slv_item_bg_btn_width) + 30)
-                .setBackground(MyUtils.getDrawable(getContext(), R.drawable.btn_right0))
-                .setText("Three")
+
+/*        mMenu.addItem(new MenuItem.Builder().setWidth((int) getResources().getDimension(R.dimen.user_rss_option))
+                .setBackground(MyUtils.getDrawable(getContext(), R.drawable.user_rss_delete))
                 .setDirection(MenuItem.DIRECTION_RIGHT)
-                .setTextColor(Color.BLACK)
-                .setTextSize((int) getResources().getDimension(R.dimen.txt_size))
+                .setIcon(getResources().getDrawable(R.mipmap.delete))
+                .build());*/
+        mMenu.addItem(new MenuItem.Builder().setWidth((int) getResources().getDimension(R.dimen.user_rss_option) + 30)
+                .setBackground(MyUtils.getDrawable(getContext(), R.drawable.user_rss_delete))
+                .setText("删除")
+                .setDirection(MenuItem.DIRECTION_RIGHT)
+                .setTextColor(Color.WHITE)
+                .setTextSize((int) getResources().getDimension(R.dimen.user_rss_text))
                 .build());
-        mMenu.addItem(new MenuItem.Builder().setWidth((int) getResources().getDimension(R.dimen.slv_item_bg_btn_width_img))
-                .setBackground(MyUtils.getDrawable(getContext(), R.drawable.btn_right1))
+        mMenu.addItem(new MenuItem.Builder().setWidth((int) getResources().getDimension(R.dimen.user_rss_option) + 30)
+                .setBackground(MyUtils.getDrawable(getContext(), R.drawable.user_rss_top))
+                .setText("置顶")
                 .setDirection(MenuItem.DIRECTION_RIGHT)
-                .setIcon(getResources().getDrawable(R.mipmap.ic_launcher))
+                .setTextColor(Color.WHITE)
+                .setTextSize((int) getResources().getDimension(R.dimen.user_rss_text))
                 .build());
     }
 
@@ -120,10 +127,10 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
             if (convertView == null) {
                 cvh = new CustomViewHolder();
                 convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_custom_btn, null);
-                cvh.imgLogo = (ImageView) convertView.findViewById(R.id.img_item_edit);
-                cvh.txtName = (TextView) convertView.findViewById(R.id.txt_item_edit);
-                cvh.btnClick = (Button) convertView.findViewById(R.id.btn_item_click);
-                cvh.btnClick.setOnClickListener(mOnClickListener);
+                cvh.imgLogo = (ImageView) convertView.findViewById(R.id.img_user_rss);
+                cvh.txtName = (TextView) convertView.findViewById(R.id.tv_user_rss);
+//                cvh.btnClick = (Button) convertView.findViewById(R.id.btn_item_click);
+//                cvh.btnClick.setOnClickListener(mOnClickListener);
                 convertView.setTag(cvh);
             } else {
                 cvh = (CustomViewHolder) convertView.getTag();
@@ -131,15 +138,15 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
             ApplicationInfo item = (ApplicationInfo) this.getItem(position);
             cvh.txtName.setText(item.loadLabel(getActivity().getPackageManager()));
             cvh.imgLogo.setImageDrawable(item.loadIcon(getActivity().getPackageManager()));
-            cvh.btnClick.setText(position + "");
-            cvh.btnClick.setTag(position);
+//            cvh.btnClick.setText(position + "");
+//            cvh.btnClick.setTag(position);
             return convertView;
         }
 
         class CustomViewHolder {
             public ImageView imgLogo;
             public TextView txtName;
-            public Button btnClick;
+//            public Button btnClick;
         }
 
         private View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -212,9 +219,9 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
             case MenuItem.DIRECTION_RIGHT:
                 switch (buttonPosition) {
                     case 0:
-                        return Menu.ITEM_SCROLL_BACK;
-                    case 1:
                         return Menu.ITEM_DELETE_FROM_BOTTOM_TO_TOP;
+                    case 1:
+                        return Menu.ITEM_SCROLL_BACK;
                 }
         }
         return Menu.ITEM_NOTHING;

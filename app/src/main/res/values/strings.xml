@@ -6,11 +6,11 @@
 
     <string name="action_settings">Settings</string>
     <string name="sign_up">Sign up</string>
-    <string name="user_name">user name</string>
-    <string name="user_email">user mail</string>
+    <string name="user_name">name</string>
+    <string name="user_email">mail</string>
     <string name="password">password</string>
-    <string name="re_password">pleas input password again</string>
-    <string name="login">LOGIN</string>
+    <string name="re_password">re-password</string>
+    <string name="login">LOGIN OR REGISTER</string>
     <string name="exist_to_login">Existing user? Login</string>
     <string name="sign_in">Login in</string>
     <string name="create_count">Create my account</string>

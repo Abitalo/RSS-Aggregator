@@ -49,7 +49,7 @@ public class RssSourceView extends Fragment {
     };
 
     public RssSourceView() {
-        this.facetId = 1;
+        this(1);
     }
 
     public RssSourceView(int facetId) {

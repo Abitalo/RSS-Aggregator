@@ -1,6 +1,8 @@
 package com.abitalo.www.rss_aggregator.view;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -90,7 +92,7 @@ public class SignUpView extends Fragment implements View.OnClickListener, IAccou
 
     @Override
     public String getUserName() {
-        return etEmail.getText().toString();
+        return etFullName.getText().toString();
     }
 
     @Override
@@ -108,16 +110,18 @@ public class SignUpView extends Fragment implements View.OnClickListener, IAccou
     public boolean onSuccess() {
         showMenu();
         Snackbar.make(view, "Success!", Snackbar.LENGTH_SHORT).show();
+        SharedPreferences mySharedPreferences= getContext().getSharedPreferences("userAuthentication",
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = mySharedPreferences.edit();
+        editor.putString("name", getUserName());
+        editor.apply();
         return false;
     }
 
     private void showMenu() {//将来需要使用从云端获得的用户数据作为参数，然后使用adapter根据用户数据填充菜单。。
-        NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_account);
-        navigationView.addView(new AccountNavigationView(getActivity()));
         onDestroy();
-        drawer.openDrawer(getActivity().findViewById(R.id.nav_account));
-
         FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.nav_account, new UserAccountView(), "user_account").commit();
         fragmentManager.beginTransaction().replace(R.id.fragment_content, new MainContentDemoView(), "Main content").commit();
     }
 }
