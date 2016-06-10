@@ -21,6 +21,7 @@ import com.abitalo.www.rss_aggregator.view.AccountNavigationView;
 import com.abitalo.www.rss_aggregator.view.NavDiscoveryView;
 import com.abitalo.www.rss_aggregator.view.UserAccountView;
 import com.abitalo.www.rss_aggregator.view.WelcomeNav;
+import com.facebook.drawee.backends.pipeline.Fresco;
 
 import cn.bmob.v3.Bmob;
 
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fresco.initialize(this);
         setContentView(R.layout.activity_main);
         //SDK 初始化
         Bmob.initialize(this, Conf.APP_ID);

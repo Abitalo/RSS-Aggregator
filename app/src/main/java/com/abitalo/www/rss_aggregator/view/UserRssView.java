@@ -23,6 +23,7 @@ import com.yydcdut.sdlv.Menu;
 import com.yydcdut.sdlv.MenuItem;
 import com.yydcdut.sdlv.SlideAndDragListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,15 +33,17 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
     private View view;
     private SlideAndDragListView slideAndDragListView;
     private Menu mMenu;
+    private Menu mMenu1;
     private List<ApplicationInfo> mAppList;
     private SlideAndDragListView<ApplicationInfo> mListView;
     private PullToRefreshView mPullToRefreshView;
     private static final String TAG = Fragment.class.getSimpleName();
+    private ArrayList<Menu> mMenuList;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.user_rss, container, false);
-        Log.i(TAG, "onCreateView");//match_parent
         initView();
         return view;
     }
@@ -70,7 +73,7 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
 
     private void initUiAndListener() {
         mListView = (SlideAndDragListView) view.findViewById(R.id.user_rss_display);
-        mListView.setMenu(mMenu);
+        mListView.setMenu(mMenuList);
         mListView.setAdapter(mAdapter);
         mListView.setOnListItemLongClickListener(this);
         mListView.setOnDragListener(this, mAppList);
@@ -82,8 +85,9 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
     }
 
     private void initMenu() {
-        mMenu = new Menu(true, true);
+        mMenuList = new ArrayList<>(2);
 
+        mMenu = new Menu(true, true, 0);
 /*        mMenu.addItem(new MenuItem.Builder().setWidth((int) getResources().getDimension(R.dimen.user_rss_option))
                 .setBackground(MyUtils.getDrawable(getContext(), R.drawable.user_rss_delete))
                 .setDirection(MenuItem.DIRECTION_RIGHT)
@@ -103,6 +107,25 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
                 .setTextColor(Color.WHITE)
                 .setTextSize((int) getResources().getDimension(R.dimen.user_rss_text))
                 .build());
+
+        mMenu1 = new Menu(true, true, 1);
+
+        mMenu1.addItem(new MenuItem.Builder().setWidth((int) getResources().getDimension(R.dimen.user_rss_option) + 30)
+                .setBackground(MyUtils.getDrawable(getContext(), R.drawable.user_rss_delete))
+                .setText("删除")
+                .setDirection(MenuItem.DIRECTION_RIGHT)
+                .setTextColor(Color.WHITE)
+                .setTextSize((int) getResources().getDimension(R.dimen.user_rss_text))
+                .build());
+        mMenu1.addItem(new MenuItem.Builder().setWidth((int) getResources().getDimension(R.dimen.user_rss_option) + 30)
+                .setBackground(MyUtils.getDrawable(getContext(), R.drawable.user_rss_top))
+                .setText("取消置顶")
+                .setDirection(MenuItem.DIRECTION_RIGHT)
+                .setTextColor(Color.WHITE)
+                .setTextSize((int) getResources().getDimension(R.dimen.user_rss_text))
+                .build());
+        mMenuList.add(mMenu);
+        mMenuList.add(mMenu1);
     }
 
     private BaseAdapter mAdapter = new BaseAdapter() {
@@ -122,6 +145,20 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
         }
 
         @Override
+        public int getItemViewType(int position) {
+            if (position < 10){
+                return 1;
+            }else {
+                return 0;
+            }
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            return 2;
+        }
+
+        @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             CustomViewHolder cvh;
             if (convertView == null) {
@@ -138,6 +175,10 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
             ApplicationInfo item = (ApplicationInfo) this.getItem(position);
             cvh.txtName.setText(item.loadLabel(getActivity().getPackageManager()));
             cvh.imgLogo.setImageDrawable(item.loadIcon(getActivity().getPackageManager()));
+            if (position < 10){
+                cvh.txtName.setTextColor(Color.parseColor("#ffff4444"));
+
+            }
 //            cvh.btnClick.setText(position + "");
 //            cvh.btnClick.setTag(position);
             return convertView;
@@ -207,12 +248,41 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
     @Override
     public int onMenuItemClick(View v, int itemPosition, int buttonPosition, int direction) {
         Log.i(TAG, "onMenuItemClick   " + itemPosition + "   " + buttonPosition + "   " + direction);
+        int viewType = mAdapter.getItemViewType(itemPosition);
+        switch (viewType) {
+            case 0:
+                return clickMenuBtn0(buttonPosition, direction);
+            case 1:
+                return clickMenuBtn1(buttonPosition, direction);
+            default:
+                return Menu.ITEM_NOTHING;
+        }
+    }
+
+    private int clickMenuBtn0(int buttonPosition, int direction) {
         switch (direction) {
             case MenuItem.DIRECTION_LEFT:
                 switch (buttonPosition) {
                     case 0:
-                        return Menu.ITEM_NOTHING;
+                        return Menu.ITEM_SCROLL_BACK;
+                }
+                break;
+            case MenuItem.DIRECTION_RIGHT:
+                switch (buttonPosition) {
+                    case 0:
+                        return Menu.ITEM_DELETE_FROM_BOTTOM_TO_TOP;
                     case 1:
+                        return Menu.ITEM_SCROLL_BACK;
+                }
+        }
+        return Menu.ITEM_NOTHING;
+    }
+
+    private int clickMenuBtn1(int buttonPosition, int direction) {
+        switch (direction) {
+            case MenuItem.DIRECTION_LEFT:
+                switch (buttonPosition) {
+                    case 0:
                         return Menu.ITEM_SCROLL_BACK;
                 }
                 break;

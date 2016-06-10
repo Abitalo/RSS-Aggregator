@@ -6,16 +6,8 @@
     android:orientation="vertical"
     android:layout_height="wrap_content">
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/discovery_recycler_card_view"
+        android:id="@+id/main_page_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical" />
-
-    <ProgressBar
-        android:id="@+id/facet_loading_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        android:indeterminateTint="@color/colorPrimary" />
 </LinearLayout>

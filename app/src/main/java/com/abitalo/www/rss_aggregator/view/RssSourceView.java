@@ -1,6 +1,7 @@
 package com.abitalo.www.rss_aggregator.view;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,10 +13,13 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.abitalo.www.rss_aggregator.R;
 import com.abitalo.www.rss_aggregator.adapter.RssSourceAdapter;
+import com.abitalo.www.rss_aggregator.constants.MessageWhat;
+import com.abitalo.www.rss_aggregator.helper.RssSourceViewHelper;
 import com.abitalo.www.rss_aggregator.model.RssSource;
 
 import org.json.JSONArray;
@@ -35,18 +39,14 @@ import cn.bmob.v3.listener.FindCallback;
 public class RssSourceView extends Fragment {
     private View view;
     private int facetId;
+    private Handler handler;
+    private RssSourceViewHelper rssSourceViewHelper;
+    private ArrayList<RssSource> rssSources;
+    private RecyclerView recyclerView;
 
-    android.os.Handler handler = new android.os.Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 1:
-                    Bundle bundle = msg.getData();
-                    initView(bundle.getString("msg"));
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    };
+    private ProgressBar progressBar;
+
+
 
     public RssSourceView() {
         this(1);
@@ -60,70 +60,46 @@ public class RssSourceView extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view  = inflater.inflate(R.layout.rss_source_main, container, false);
-        getJSONRSSource();
+        initView();
+        initHandler();
+        loadData();
         return view;
     }
 
-    public void getJSONRSSource() {
-        BmobQuery query = new BmobQuery("rss_source");
-        query.addWhereEqualTo("facetId", 1);
-        query.findObjects(getContext(), new FindCallback() {
-            @Override
-            public void onSuccess(JSONArray arg0) {
-                Message message = new Message();
-                Bundle bundle = new Bundle();
-                bundle.putString("msg", arg0.toString());
-                message.setData(bundle);
-                message.what = 1;
-                handler.sendMessage(message);
-            }
-
-
-            @Override
-            public void onFailure(int arg0, String arg1) {
-                showToast("查询失败:" + arg1);
-            }
-        });
+    private void loadData() {
+        rssSourceViewHelper = new RssSourceViewHelper(getContext(),handler,facetId);
+        rssSourceViewHelper.start();
     }
-    private void initView(String msg) {
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rss_source_recycler);
+
+    private void initHandler() {
+        handler = new android.os.Handler() {
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case MessageWhat.RSS_SOURCE_LOAD_SUCCESS:
+                        Bundle bundle = msg.getData();
+                        rssSources = bundle.getParcelableArrayList("rssSources");
+                        continueInitView(rssSources);
+                        break;
+                }
+                super.handleMessage(msg);
+            }
+        };
+    }
+
+    private void continueInitView(ArrayList<RssSource> rssSources) {
+        progressBar.setVisibility(View.GONE);
+        RssSourceAdapter rssSourceAdapter = new RssSourceAdapter(getContext(), rssSources, this);
+        recyclerView.setAdapter(rssSourceAdapter);
+
+    }
+
+    private void initView() {
+        progressBar = (ProgressBar) view.findViewById(R.id.inner_rss_loading_bar);
+        progressBar.setVisibility(View.VISIBLE);
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.rss_source_recycler);
         final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-
-        List<RssSource> rssSources = getFacets(msg);
-
-        RssSourceAdapter rssSourceAdapter = new RssSourceAdapter(getContext(),rssSources);
-        recyclerView.setAdapter(rssSourceAdapter);
-    }
-    private void showToast(String msg) {
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-    }
-
-    public List<RssSource> getFacets(String data) {
-        JSONArray jsonArray = null;
-        JSONObject jsonObject = null;
-        try {
-            jsonArray = new JSONArray(data);
-
-        } catch (JSONException e) {
-            showToast(e.toString());
-        }
-
-        List<RssSource> rssSources = new ArrayList<>();
-        rssSources.add(new RssSource());
-        for (int i = 0; i < jsonArray.length(); i++) {
-            try {
-                jsonObject = jsonArray.getJSONObject(i);
-                RssSource rssSource = new RssSource();
-                rssSource.setId(Integer.parseInt(jsonObject.get("id").toString()));
-                rssSource.setRssName(jsonObject.get("rssName").toString());
-//                        facet.setBackgroundUrl(jsonObject.get("facetImage").toString());
-                rssSources.add(rssSource);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return rssSources;
     }
 
     @Override
@@ -145,11 +121,7 @@ public class RssSourceView extends Fragment {
         });
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.i("RssSourceView", "here you are !!!");
-    }
+
 
 
 }

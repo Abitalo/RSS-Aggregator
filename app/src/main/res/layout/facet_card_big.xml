@@ -2,6 +2,7 @@
 <!-- 大块源分类布局，包括图片和标题 -->
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="170dp"
@@ -16,10 +17,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/big_facet_card_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            fresco:viewAspectRatio="1.78"
             android:background="#ccc" />
 
         <TextView

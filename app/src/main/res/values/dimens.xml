@@ -10,7 +10,7 @@
     <dimen name="textsize_primary_large">32sp</dimen>
 
     <dimen name="slv_item_bg_btn_width">48dip</dimen>
-    <dimen name="user_rss_text">5sp</dimen>
+    <dimen name="user_rss_text">4sp</dimen>
     <dimen name="slv_item_height">66dip</dimen>
     <dimen name="user_rss_option">70dip</dimen>
 </resources>

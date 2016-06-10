@@ -16,4 +16,12 @@
             android:layout_height="match_parent">
         </com.yydcdut.sdlv.SlideAndDragListView>
     </com.yalantis.phoenix.PullToRefreshView>
+
+    <ProgressBar
+        android:id="@+id/user_rss_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/colorPrimary" />
 </LinearLayout>

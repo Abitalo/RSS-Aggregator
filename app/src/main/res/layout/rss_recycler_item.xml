@@ -2,6 +2,7 @@
 <!-- 具体源的界面布局 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:fresco="http://schemas.android.com/tools"
     android:clickable="true"
     android:background="?android:attr/selectableItemBackground"
     android:paddingTop="15dp"
@@ -9,8 +10,9 @@
     android:paddingRight="10dp"
     android:layout_height="70dp">
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:src="@mipmap/google"
+        fresco:viewAspectRatio="1.78"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/rss_source_icon" />

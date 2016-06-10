@@ -1,6 +1,7 @@
 package com.abitalo.www.rss_aggregator.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,8 @@ import com.abitalo.www.rss_aggregator.R;
 import com.abitalo.www.rss_aggregator.model.Facet;
 import com.abitalo.www.rss_aggregator.view.RssSourceView;
 import com.abitalo.www.rss_aggregator.view.SignInView;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
@@ -35,7 +38,6 @@ public class FacetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public FacetAdapter(Context context, List<Facet> facets, Fragment fragment) {
         this.facets = facets;
         this.fragment = fragment;
-//        this.fragmentManager = fragmentManager;
     }
 
     @Override
@@ -70,8 +72,8 @@ public class FacetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolder) {
             ((ViewHolder) holder).tvFacetName.setText(facets.get(position).getFacetName());
-            holder.itemView.setTag(position);
-            //// TODO:需要添加图片的加载解析 2016/5/10
+            holder.itemView.setTag(facets.get(position).getId());
+            ((ViewHolder) holder).ivFacetImage.setImageURI(Uri.parse(facets.get(position).getBackgroundUrl()));
         }
     }
 
@@ -99,19 +101,19 @@ public class FacetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         showResource((Integer) v.getTag());
     }
 
-    private void showResource(int position) {
+    private void showResource(int facetId) {
         FragmentManager fragmentManager = fragment.getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.nav_discovery_main, new RssSourceView(1), "rss_source").commit();
+        fragmentManager.beginTransaction().replace(R.id.nav_discovery_main, new RssSourceView(facetId), "rss_source").commit();
     }
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvFacetName;
-        public ImageView ivFacetImage;
+        public SimpleDraweeView ivFacetImage;
         public ViewHolder(View itemView) {
             super(itemView);
             tvFacetName = (TextView) itemView.findViewById(R.id.big_facet_card_title);
-//            ivFacetImage = (ImageView) itemView.findViewById(R.id.big_facet_card_image);
+            ivFacetImage = (SimpleDraweeView) itemView.findViewById(R.id.big_facet_card_image);
         }
     }
 

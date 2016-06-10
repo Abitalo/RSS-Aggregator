@@ -1,8 +1,11 @@
 package com.abitalo.www.rss_aggregator.adapter;
 
 import android.content.Context;
+import android.net.Uri;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,7 @@ import android.widget.Toast;
 
 import com.abitalo.www.rss_aggregator.R;
 import com.abitalo.www.rss_aggregator.model.RssSource;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.w3c.dom.Text;
 
@@ -28,10 +32,12 @@ public class RssSourceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private Context context;
     private List<RssSource> rssSources;
+    private Fragment fragment;
 
-    public RssSourceAdapter(Context context, List<RssSource> rssSources){
+    public RssSourceAdapter(Context context, List<RssSource> rssSources, Fragment fragment){
         this.rssSources = rssSources;
         this.context = context;
+        this.fragment = fragment;
     }
 
     @Override
@@ -57,10 +63,11 @@ public class RssSourceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolder){
             ((ViewHolder)holder).tvRssSourceTitle.setText(rssSources.get(position).getRssName());
-//            ((ViewHolder)holder).tvRssSourceTitle.setTag(rssSources.get(position).getRssUrl());
+            ((ViewHolder)holder).tvRssSourceTitle.setTag(rssSources.get(position).getRssUrl());
             ((ViewHolder)holder).tvRssSourceTitle.setOnClickListener(this);
-//            ((ViewHolder)holder).ivRssSourceAdd.setTag(rssSources.get(position).getRssUrl());
+            ((ViewHolder)holder).ivRssSourceAdd.setTag(rssSources.get(position).getRssUrl());
             ((ViewHolder)holder).ivRssSourceAdd.setOnClickListener(this);
+            ((ViewHolder) holder).ivRssSourceIcon.setImageURI(Uri.parse(rssSources.get(position).getRssIcon()));
         }
     }
 
@@ -82,18 +89,16 @@ public class RssSourceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.rss_source_title){
-            // TODO: 2016/5/16 点击标题的事件
-            Toast.makeText(context, "标题被点击了", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, v.getTag().toString(), Toast.LENGTH_SHORT).show();
         }else if (v.getId() == R.id.rss_add_source){
-            //// TODO: 2016/5/16 点击添加的按钮的操作
-            Toast.makeText(context, "添加按钮被点击了", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, v.getTag().toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView tvRssSourceTitle;
-        private ImageView ivRssSourceIcon;
+        private SimpleDraweeView ivRssSourceIcon;
         private TextView tvRssSourceReader;
         private ImageView ivRssSourceAdd;
 
@@ -102,7 +107,7 @@ public class RssSourceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             tvRssSourceTitle = (TextView) itemView.findViewById(R.id.rss_source_title);
             tvRssSourceReader = (TextView) itemView.findViewById(R.id.rss_source_reader);
-            ivRssSourceIcon = (ImageView) itemView.findViewById(R.id.rss_source_icon);
+            ivRssSourceIcon = (SimpleDraweeView) itemView.findViewById(R.id.rss_source_icon);
             ivRssSourceAdd = (ImageView) itemView.findViewById(R.id.rss_add_source);
 
         }
