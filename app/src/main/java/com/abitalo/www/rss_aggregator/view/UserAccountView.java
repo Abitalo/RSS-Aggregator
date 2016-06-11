@@ -22,6 +22,7 @@ public class UserAccountView extends Fragment implements View.OnClickListener {
     private View view;
     private LinearLayout llExit;
     private LinearLayout llRss;
+    private LinearLayout llMainPage;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,6 +39,10 @@ public class UserAccountView extends Fragment implements View.OnClickListener {
         llRss = (LinearLayout) view.findViewById(R.id.user_rss_source);
         llRss.setOnClickListener(this);
 
+        llMainPage = (LinearLayout) view.findViewById(R.id.ll_main_page);
+        llMainPage.setOnClickListener(this);
+
+
     }
 
     @Override
@@ -49,7 +54,16 @@ public class UserAccountView extends Fragment implements View.OnClickListener {
             case R.id.user_rss_source:
                 userRssSource();
                 break;
+            case R.id.ll_main_page:
+                mainPage();
+                break;
         }
+    }
+
+    private void mainPage() {
+        getFragmentManager().beginTransaction().replace(R.id.fragment_content,RSSListView.newInstance("https://www.zhihu.com/rss"), "fragment_view").commit();
+        DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(getActivity().findViewById(R.id.nav_account));
     }
 
     private void userRssSource() {

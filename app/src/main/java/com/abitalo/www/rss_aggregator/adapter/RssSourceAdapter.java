@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,14 +34,12 @@ public class RssSourceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private static final int TYPE_TITLE = 866;
     private static final int TYPE_LIST = 322;
 
-    private Context context;
-    private List<RssSource> rssSources;
-    private Fragment fragment;
+    private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
-    public RssSourceAdapter(Context context, List<RssSource> rssSources, Fragment fragment){
+    private List<RssSource> rssSources;
+
+    public RssSourceAdapter(List<RssSource> rssSources){
         this.rssSources = rssSources;
-        this.context = context;
-        this.fragment = fragment;
     }
 
     @Override
@@ -51,6 +50,7 @@ public class RssSourceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) view.getLayoutParams();
             layoutParams.setFullSpan(true);
             view.setLayoutParams(layoutParams);
+            view.setOnClickListener(this);
             return new ViewHolder(view);
         }else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rss_recycler_title, parent, false);
@@ -65,12 +65,15 @@ public class RssSourceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolder){
+            holder.itemView.setTag(rssSources.get(position).getRssUrl());
+
             ((ViewHolder)holder).tvRssSourceTitle.setText(rssSources.get(position).getRssName());
-            ((ViewHolder)holder).tvRssSourceTitle.setTag(rssSources.get(position).getRssUrl());
-            ((ViewHolder)holder).tvRssSourceTitle.setOnClickListener(this);
+
             ((ViewHolder)holder).ivRssSourceAdd.setTag(rssSources.get(position).getRssUrl());
             ((ViewHolder)holder).ivRssSourceAdd.setOnClickListener(this);
+
             ((ViewHolder) holder).ivRssSourceIcon.setImageURI(Uri.parse(rssSources.get(position).getRssIcon()));
+
         }
     }
 
@@ -89,19 +92,16 @@ public class RssSourceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return rssSources.size();
     }
 
+    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
+        this.mOnItemClickListener = listener;
+    }
+
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.rss_source_title){
-            Toast.makeText(context, v.getTag().toString(), Toast.LENGTH_SHORT).show();
-        }else if (v.getId() == R.id.rss_add_source){
-            v.setVisibility(View.GONE);
-            SharedPreferences sharedPreferences= context.getSharedPreferences("userAuthentication",
-                    Activity.MODE_PRIVATE);
-            String name =sharedPreferences.getString("name", "");
-            UserRssEditHelper userRssEditHelper = new UserRssEditHelper(context, name, v.getTag().toString());
-            userRssEditHelper.getUserId();
-            Toast.makeText(context, v.getTag().toString(), Toast.LENGTH_SHORT).show();
+        if (mOnItemClickListener != null) {
+            mOnItemClickListener.onItemClick(v,(String)v.getTag());
         }
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -129,5 +129,8 @@ public class RssSourceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             super(itemView);
             tvSearchTip = (TextView) itemView.findViewById(R.id.rss_search_title);
         }
+    }
+    public static interface OnRecyclerViewItemClickListener {
+        void onItemClick(View view , String data);
     }
 }

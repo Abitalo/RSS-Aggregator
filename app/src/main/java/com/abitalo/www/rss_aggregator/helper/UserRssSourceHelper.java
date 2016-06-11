@@ -33,9 +33,8 @@ public class UserRssSourceHelper extends Thread {
     private Handler handler = null;
     private Context context;
     private String userId;
-    private ArrayList<String> userRegisterSet;
+    private ArrayList<String> userRegisterSet = new ArrayList<>();
     private ArrayList<RssSource> rssSources = new ArrayList<>();
-
 
     public UserRssSourceHelper(Context context, Handler handler) {
         this.context = context;
@@ -44,15 +43,12 @@ public class UserRssSourceHelper extends Thread {
 
     @Override
     public void run() {
-
         SharedPreferences sharedPreferences = context.getSharedPreferences("userAuthentication",
                 Activity.MODE_PRIVATE);
         String name = sharedPreferences.getString("name", "");
-
         BmobQuery<MeetUser> bmobQuery = new BmobQuery<>();
         bmobQuery.addWhereEqualTo("username", name);
         bmobQuery.addQueryKeys("objectId");
-
 
         bmobQuery.findObjects(context, new FindListener<MeetUser>() {
 
@@ -112,15 +108,47 @@ public class UserRssSourceHelper extends Thread {
 
             @Override
             public void onFailure(int arg0, String arg1) {
-//                showToast("查询失败:" + arg1);
+                Log.i("RegisterHelper", "code:::" + arg0);
+                Log.i("RegisterHelper", "Message:::" + arg1);
             }
         });
     }
 
     private void getUserData() {
-        BmobQuery<UserData> bmobQuery = new BmobQuery<>();
+//        BmobQuery<UserData> bmobQuery = new BmobQuery<>();
+        BmobQuery bmobQuery = new BmobQuery("UserData");
         bmobQuery.addWhereEqualTo("userId", userId);
-        bmobQuery.findObjects(context, new FindListener<UserData>() {
+        bmobQuery.findObjects(context, new FindCallback() {
+            @Override
+            public void onSuccess(JSONArray jsonArray) {
+                Log.i("UserRssSourceHelper", userId);
+                JSONObject jsonObject;
+                ArrayList<RssSource> rssSources = new ArrayList<>();
+                rssSources.add(new RssSource());
+                assert jsonArray != null;
+                try {
+                    jsonObject = jsonArray.getJSONObject(0);
+                    Log.i("UserRssSourceHelper", jsonObject.get("userRegisterSet").toString());
+                    if (jsonObject.get("userRegisterSet").toString().length() != 0){
+                        JSONArray userRegisterSetJSONArray = (JSONArray) jsonObject.get("userRegisterSet");
+                        for (int j = 0; j < userRegisterSetJSONArray.length(); j++) {
+                            userRegisterSet.add(userRegisterSetJSONArray.get(j).toString());
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                getRssSourceData();
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+                Log.i("RegisterHelper", "code:::" + i);
+                Log.i("RegisterHelper", "Message:::" + s);
+            }
+        });
+        /*bmobQuery.findObjects(context, new FindListener<UserData>() {
             @Override
             public void onSuccess(List<UserData> list) {
                 userRegisterSet = list.get(0).getUserRegisterSet();
@@ -132,7 +160,7 @@ public class UserRssSourceHelper extends Thread {
                 Log.i("RegisterHelper", "code:::" + i);
                 Log.i("RegisterHelper", "Message:::" + s);
             }
-        });
+        });*/
     }
 
     private void getRssSourceData() {
@@ -173,6 +201,7 @@ public class UserRssSourceHelper extends Thread {
         message.what = MessageWhat.RSS_SOURCE_LOAD_SUCCESS;
         message.setData(bundle);
         handler.sendMessage(message);
+
     }
 
     public void stopLoad() {

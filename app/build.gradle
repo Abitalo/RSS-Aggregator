@@ -42,4 +42,5 @@ dependencies {
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
     compile 'com.facebook.fresco:fresco:0.10.0'
     compile project(':library')
+    compile files('libs/cpdetector_1.0.6.jar')
 }

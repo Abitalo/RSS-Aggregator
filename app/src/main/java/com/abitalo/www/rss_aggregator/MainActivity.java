@@ -19,6 +19,7 @@ import com.abitalo.www.rss_aggregator.constants.Conf;
 import com.abitalo.www.rss_aggregator.presenter.AccountPresenter;
 import com.abitalo.www.rss_aggregator.view.AccountNavigationView;
 import com.abitalo.www.rss_aggregator.view.NavDiscoveryView;
+import com.abitalo.www.rss_aggregator.view.RSSListView;
 import com.abitalo.www.rss_aggregator.view.UserAccountView;
 import com.abitalo.www.rss_aggregator.view.WelcomeNav;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -75,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
             fragmentManager.beginTransaction().add(R.id.nav_account, new WelcomeNav(), "account_nav").commit();
         }
         fragmentManager.beginTransaction().add(R.id.discovery_nav_view, new NavDiscoveryView(), "discovery_view").commit();
+
+        fragmentManager.beginTransaction().add(R.id.fragment_content,RSSListView.newInstance("https://www.zhihu.com/rss"), "fragment_view").commit();
     }
 
     @Override

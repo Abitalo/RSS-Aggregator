@@ -1,11 +1,14 @@
 package com.abitalo.www.rss_aggregator.view;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -20,6 +23,7 @@ import com.abitalo.www.rss_aggregator.R;
 import com.abitalo.www.rss_aggregator.adapter.RssSourceAdapter;
 import com.abitalo.www.rss_aggregator.constants.MessageWhat;
 import com.abitalo.www.rss_aggregator.helper.RssSourceViewHelper;
+import com.abitalo.www.rss_aggregator.helper.UserRssEditHelper;
 import com.abitalo.www.rss_aggregator.model.RssSource;
 
 import org.json.JSONArray;
@@ -78,7 +82,7 @@ public class RssSourceView extends Fragment {
                     case MessageWhat.RSS_SOURCE_LOAD_SUCCESS:
                         Bundle bundle = msg.getData();
                         rssSources = bundle.getParcelableArrayList("rssSources");
-                        continueInitView(rssSources);
+                        continueInitView();
                         break;
                 }
                 super.handleMessage(msg);
@@ -86,10 +90,29 @@ public class RssSourceView extends Fragment {
         };
     }
 
-    private void continueInitView(ArrayList<RssSource> rssSources) {
+    private void continueInitView() {
         progressBar.setVisibility(View.GONE);
-        RssSourceAdapter rssSourceAdapter = new RssSourceAdapter(getContext(), rssSources, this);
+        RssSourceAdapter rssSourceAdapter = new RssSourceAdapter(rssSources);
         recyclerView.setAdapter(rssSourceAdapter);
+        rssSourceAdapter.setOnItemClickListener(new RssSourceAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View v, String data) {
+//                    Toast.makeText(getContext(), rssSources.get(Integer.parseInt(v.getTag().toString())).getRssUrl(), Toast.LENGTH_SHORT).show();
+                if (v.getId() == R.id.rss_add_source){
+                    v.setVisibility(View.GONE);
+
+                    UserRssEditHelper userRssEditHelper = new UserRssEditHelper(getContext(), v.getTag().toString());
+                    userRssEditHelper.getUserId("add");
+                    Toast.makeText(getContext(), v.getTag().toString(), Toast.LENGTH_SHORT).show();
+                }else {
+                    Log.i("RssSourceView", v.getTag()+"::");
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_content,RSSListView.newInstance(v.getTag().toString()), "fragment_view").commit();
+
+                    DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(getActivity().findViewById(R.id.discovery_nav_view));
+                }
+            }
+        });
 
     }
 

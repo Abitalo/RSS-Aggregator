@@ -52,6 +52,7 @@
 
             <LinearLayout
                 android:clickable="true"
+                android:id="@+id/ll_main_page"
                 android:background="?android:attr/selectableItemBackground"
                 android:layout_marginTop="20dp"
                 android:paddingTop="5dp"

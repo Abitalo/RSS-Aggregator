@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.abitalo.www.rss_aggregator.R;
 import com.abitalo.www.rss_aggregator.constants.MessageWhat;
+import com.abitalo.www.rss_aggregator.helper.UserRssEditHelper;
 import com.abitalo.www.rss_aggregator.helper.UserRssSourceHelper;
 import com.abitalo.www.rss_aggregator.model.RssSource;
 import com.abitalo.www.rss_aggregator.util.MyUtils;
@@ -250,6 +251,7 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
     @Override
     public void onListItemClick(View v, int position) {
 //        Toast.makeText(getContext(), "onItemClick   position--->" + position, Toast.LENGTH_SHORT).show();
+        getFragmentManager().beginTransaction().replace(R.id.fragment_content,RSSListView.newInstance(rssSourceList.get(position).getRssUrl()), "fragment_view").commit();
         Log.i(TAG, "onListItemClick   " + position);
     }
 
@@ -319,6 +321,8 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
 
     @Override
     public void onItemDelete(View view, int position) {
+        UserRssEditHelper userRssEditHelper = new UserRssEditHelper(getContext(), rssSourceList.get(position).getRssUrl());
+        userRssEditHelper.getUserId("delete");
         rssSourceList.remove(position - mListView.getHeaderViewsCount());
         mAdapter.notifyDataSetChanged();
     }

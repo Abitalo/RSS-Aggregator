@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     xmlns:fresco="http://schemas.android.com/tools"
     android:clickable="true"
+    android:id="@+id/rss_source_item"
     android:background="?android:attr/selectableItemBackground"
     android:paddingTop="15dp"
     android:paddingLeft="10dp"
