@@ -8,6 +8,11 @@ import cn.bmob.v3.BmobUser;
  */
 public class MeetUser extends BmobUser {
 
+    public MeetUser(){
+        this.setTableName("_User");
+    }
+
+
     //已包括
     // objectId,username,password,
     // mobilePhoneNumberVerified,mobilePhoneNumber,

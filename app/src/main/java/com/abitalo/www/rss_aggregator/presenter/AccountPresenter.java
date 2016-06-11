@@ -1,6 +1,11 @@
 package com.abitalo.www.rss_aggregator.presenter;
 
+import android.os.Handler;
+import android.os.Message;
+
 import com.abitalo.www.rss_aggregator.MainActivity;
+import com.abitalo.www.rss_aggregator.helper.RegisterHelper;
+import com.abitalo.www.rss_aggregator.model.UserData;
 import com.abitalo.www.rss_aggregator.view.IAccountView;
 
 import cn.bmob.v3.BmobUser;
@@ -11,7 +16,7 @@ import cn.bmob.v3.listener.SaveListener;
  * 登录代理者
  */
 public class AccountPresenter {
-    IAccountView iAccountView=null;
+    private IAccountView iAccountView=null;
 
     public AccountPresenter(IAccountView accountNavicationView){
         iAccountView=accountNavicationView;
@@ -22,7 +27,7 @@ public class AccountPresenter {
     }
 
     public void register(){
-        registerValidated(iAccountView.getUserName(),iAccountView.getPassword());
+        registerValidated(iAccountView.getUserName(),iAccountView.getPassword(), iAccountView.getEmail());
     }
 
     private void loginValidated(String username, String password) {
@@ -43,13 +48,16 @@ public class AccountPresenter {
         });
     }
 
-    private void registerValidated(String username, String password) {
+    private void registerValidated(final String username, String password, String email) {
         BmobUser user = new BmobUser();
         user.setUsername(username);
         user.setPassword(password);
+//        user.setEmail(email);
         user.signUp(iAccountView.getContext(), new SaveListener() {
             @Override
             public void onSuccess() {
+                RegisterHelper registerHelper = new RegisterHelper(iAccountView.getContext(), username);
+                registerHelper.getUser();
                 iAccountView.onSuccess();
             }
 
@@ -58,5 +66,8 @@ public class AccountPresenter {
                 iAccountView.onFailure(s);
             }
         });
+
+
+
     }
 }

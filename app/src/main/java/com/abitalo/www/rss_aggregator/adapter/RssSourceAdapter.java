@@ -1,6 +1,8 @@
 package com.abitalo.www.rss_aggregator.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.abitalo.www.rss_aggregator.R;
+import com.abitalo.www.rss_aggregator.helper.UserRssEditHelper;
 import com.abitalo.www.rss_aggregator.model.RssSource;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -91,6 +94,12 @@ public class RssSourceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         if (v.getId() == R.id.rss_source_title){
             Toast.makeText(context, v.getTag().toString(), Toast.LENGTH_SHORT).show();
         }else if (v.getId() == R.id.rss_add_source){
+            v.setVisibility(View.GONE);
+            SharedPreferences sharedPreferences= context.getSharedPreferences("userAuthentication",
+                    Activity.MODE_PRIVATE);
+            String name =sharedPreferences.getString("name", "");
+            UserRssEditHelper userRssEditHelper = new UserRssEditHelper(context, name, v.getTag().toString());
+            userRssEditHelper.getUserId();
             Toast.makeText(context, v.getTag().toString(), Toast.LENGTH_SHORT).show();
         }
     }

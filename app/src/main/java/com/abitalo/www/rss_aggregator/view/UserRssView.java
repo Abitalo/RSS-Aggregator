@@ -2,7 +2,10 @@ package com.abitalo.www.rss_aggregator.view;
 
 import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,11 +15,15 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.abitalo.www.rss_aggregator.R;
+import com.abitalo.www.rss_aggregator.constants.MessageWhat;
+import com.abitalo.www.rss_aggregator.helper.UserRssSourceHelper;
+import com.abitalo.www.rss_aggregator.model.RssSource;
 import com.abitalo.www.rss_aggregator.util.MyUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.yalantis.phoenix.PullToRefreshView;
 import com.yydcdut.sdlv.DragListView;
 import com.yydcdut.sdlv.Menu;
@@ -32,23 +39,54 @@ import java.util.List;
 public class UserRssView extends Fragment implements SlideAndDragListView.OnListItemLongClickListener, DragListView.OnDragListener, SlideAndDragListView.OnListItemClickListener, SlideAndDragListView.OnMenuItemClickListener, SlideAndDragListView.OnSlideListener, SlideAndDragListView.OnItemDeleteListener, SlideAndDragListView.OnListScrollListener {
     private View view;
     private SlideAndDragListView slideAndDragListView;
+    private ProgressBar progressBar;
     private Menu mMenu;
     private Menu mMenu1;
-    private List<ApplicationInfo> mAppList;
-    private SlideAndDragListView<ApplicationInfo> mListView;
+    private List<RssSource> rssSourceList;
+    private SlideAndDragListView<RssSource> mListView;
     private PullToRefreshView mPullToRefreshView;
     private static final String TAG = Fragment.class.getSimpleName();
     private ArrayList<Menu> mMenuList;
+    private Handler handler;
+    private UserRssSourceHelper userRssSourceHelper;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.user_rss, container, false);
         initView();
+        initHandler();
+        loadData();
         return view;
     }
 
+    private void initHandler() {
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what){
+                    case MessageWhat.RSS_SOURCE_LOAD_SUCCESS:
+                        Bundle bundle = msg.getData();
+                        rssSourceList = bundle.getParcelableArrayList("rssSources");
+                        Log.i("UserRssView", "is Here");
+                        continueInitView();
+                        break;
+                }
+            }
+        };
+    }
+
+    private void continueInitView() {
+        progressBar.setVisibility(View.GONE);
+        mPullToRefreshView.setRefreshing(true);
+        mPullToRefreshView.setRefreshing(false);
+        initUiAndListener();
+    }
+
     private void initView() {
+        progressBar = (ProgressBar) view.findViewById(R.id.user_rss_loading);
+        progressBar.setVisibility(View.VISIBLE);
+
         mPullToRefreshView = (PullToRefreshView) view.findViewById(R.id.pull_to_refresh);
         mPullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
             @Override
@@ -59,16 +97,15 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
                     public void run() {
                         mPullToRefreshView.setRefreshing(false);
                     }
-                }, 3000);
+                }, 50);
             }
         });
-        initData();
         initMenu();
-        initUiAndListener();
     }
 
-    private void initData() {
-        mAppList = getActivity().getPackageManager().getInstalledApplications(0);
+    private void loadData() {
+        userRssSourceHelper = new UserRssSourceHelper(getContext(), handler);
+        userRssSourceHelper.start();
     }
 
     private void initUiAndListener() {
@@ -76,7 +113,7 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
         mListView.setMenu(mMenuList);
         mListView.setAdapter(mAdapter);
         mListView.setOnListItemLongClickListener(this);
-        mListView.setOnDragListener(this, mAppList);
+        mListView.setOnDragListener(this, rssSourceList);
         mListView.setOnListItemClickListener(this);
         mListView.setOnSlideListener(this);
         mListView.setOnMenuItemClickListener(this);
@@ -87,7 +124,7 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
     private void initMenu() {
         mMenuList = new ArrayList<>(2);
 
-        mMenu = new Menu(true, true, 0);
+        mMenu = new Menu(false, false, 0);
 /*        mMenu.addItem(new MenuItem.Builder().setWidth((int) getResources().getDimension(R.dimen.user_rss_option))
                 .setBackground(MyUtils.getDrawable(getContext(), R.drawable.user_rss_delete))
                 .setDirection(MenuItem.DIRECTION_RIGHT)
@@ -100,15 +137,15 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
                 .setTextColor(Color.WHITE)
                 .setTextSize((int) getResources().getDimension(R.dimen.user_rss_text))
                 .build());
-        mMenu.addItem(new MenuItem.Builder().setWidth((int) getResources().getDimension(R.dimen.user_rss_option) + 30)
+        /*mMenu.addItem(new MenuItem.Builder().setWidth((int) getResources().getDimension(R.dimen.user_rss_option) + 30)
                 .setBackground(MyUtils.getDrawable(getContext(), R.drawable.user_rss_top))
                 .setText("置顶")
                 .setDirection(MenuItem.DIRECTION_RIGHT)
                 .setTextColor(Color.WHITE)
                 .setTextSize((int) getResources().getDimension(R.dimen.user_rss_text))
-                .build());
+                .build());*/
 
-        mMenu1 = new Menu(true, true, 1);
+        mMenu1 = new Menu(false, false, 1);
 
         mMenu1.addItem(new MenuItem.Builder().setWidth((int) getResources().getDimension(R.dimen.user_rss_option) + 30)
                 .setBackground(MyUtils.getDrawable(getContext(), R.drawable.user_rss_delete))
@@ -117,13 +154,13 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
                 .setTextColor(Color.WHITE)
                 .setTextSize((int) getResources().getDimension(R.dimen.user_rss_text))
                 .build());
-        mMenu1.addItem(new MenuItem.Builder().setWidth((int) getResources().getDimension(R.dimen.user_rss_option) + 30)
+       /* mMenu1.addItem(new MenuItem.Builder().setWidth((int) getResources().getDimension(R.dimen.user_rss_option) + 30)
                 .setBackground(MyUtils.getDrawable(getContext(), R.drawable.user_rss_top))
                 .setText("取消置顶")
                 .setDirection(MenuItem.DIRECTION_RIGHT)
                 .setTextColor(Color.WHITE)
                 .setTextSize((int) getResources().getDimension(R.dimen.user_rss_text))
-                .build());
+                .build());*/
         mMenuList.add(mMenu);
         mMenuList.add(mMenu1);
     }
@@ -131,12 +168,12 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
     private BaseAdapter mAdapter = new BaseAdapter() {
         @Override
         public int getCount() {
-            return mAppList.size();
+            return rssSourceList.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return mAppList.get(position);
+            return rssSourceList.get(position);
         }
 
         @Override
@@ -164,54 +201,37 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
             if (convertView == null) {
                 cvh = new CustomViewHolder();
                 convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_custom_btn, null);
-                cvh.imgLogo = (ImageView) convertView.findViewById(R.id.img_user_rss);
+                cvh.imgLogo = (SimpleDraweeView) convertView.findViewById(R.id.img_user_rss);
                 cvh.txtName = (TextView) convertView.findViewById(R.id.tv_user_rss);
-//                cvh.btnClick = (Button) convertView.findViewById(R.id.btn_item_click);
-//                cvh.btnClick.setOnClickListener(mOnClickListener);
                 convertView.setTag(cvh);
             } else {
                 cvh = (CustomViewHolder) convertView.getTag();
             }
-            ApplicationInfo item = (ApplicationInfo) this.getItem(position);
-            cvh.txtName.setText(item.loadLabel(getActivity().getPackageManager()));
-            cvh.imgLogo.setImageDrawable(item.loadIcon(getActivity().getPackageManager()));
+            RssSource item = (RssSource) this.getItem(position);
+            cvh.txtName.setText(rssSourceList.get(position).getRssName());
+            cvh.imgLogo.setImageURI(Uri.parse(rssSourceList.get(position).getRssIcon()));
             if (position < 10){
-                cvh.txtName.setTextColor(Color.parseColor("#ffff4444"));
-
+//                cvh.txtName.setTextColor(Color.parseColor("#ffff4444"));
             }
-//            cvh.btnClick.setText(position + "");
-//            cvh.btnClick.setTag(position);
             return convertView;
         }
 
         class CustomViewHolder {
-            public ImageView imgLogo;
+            public SimpleDraweeView imgLogo;
             public TextView txtName;
-//            public Button btnClick;
         }
 
-        private View.OnClickListener mOnClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Object o = v.getTag();
-                if (o instanceof Integer) {
-                    Toast.makeText(getContext(), "button click-->" + ((Integer) o), Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
     };
 
     @Override
     public void onListItemLongClick(View view, int position) {
-//        boolean bool = mListView.startDrag(position);
-//        Toast.makeText(getContent(), "onItemLongClick   position--->" + position + "   drag-->" + bool, Toast.LENGTH_SHORT).show();
-        Toast.makeText(getContext(), "onItemLongClick   position--->" + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "onItemLongClick   position--->" + position, Toast.LENGTH_SHORT).show();
         Log.i(TAG, "onListItemLongClick   " + position);
     }
 
     @Override
     public void onDragViewStart(int position) {
-        Toast.makeText(getContext(), "onDragViewStart   position--->" + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "onDragViewStart   position--->" + position, Toast.LENGTH_SHORT).show();
         Log.i(TAG, "onDragViewStart   " + position);
     }
 
@@ -223,25 +243,25 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
 
     @Override
     public void onDragViewDown(int position) {
-        Toast.makeText(getContext(), "onDragViewDown   position--->" + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "onDragViewDown   position--->" + position, Toast.LENGTH_SHORT).show();
         Log.i(TAG, "onDragViewDown   " + position);
     }
 
     @Override
     public void onListItemClick(View v, int position) {
-        Toast.makeText(getContext(), "onItemClick   position--->" + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "onItemClick   position--->" + position, Toast.LENGTH_SHORT).show();
         Log.i(TAG, "onListItemClick   " + position);
     }
 
     @Override
     public void onSlideOpen(View view, View parentView, int position, int direction) {
-        Toast.makeText(getContext(), "onSlideOpen   position--->" + position + "  direction--->" + direction, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "onSlideOpen   position--->" + position + "  direction--->" + direction, Toast.LENGTH_SHORT).show();
         Log.i(TAG, "onSlideOpen   " + position);
     }
 
     @Override
     public void onSlideClose(View view, View parentView, int position, int direction) {
-        Toast.makeText(getContext(), "onSlideClose   position--->" + position + "  direction--->" + direction, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "onSlideClose   position--->" + position + "  direction--->" + direction, Toast.LENGTH_SHORT).show();
         Log.i(TAG, "onSlideClose   " + position);
     }
 
@@ -299,7 +319,7 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
 
     @Override
     public void onItemDelete(View view, int position) {
-        mAppList.remove(position - mListView.getHeaderViewsCount());
+        rssSourceList.remove(position - mListView.getHeaderViewsCount());
         mAdapter.notifyDataSetChanged();
     }
 

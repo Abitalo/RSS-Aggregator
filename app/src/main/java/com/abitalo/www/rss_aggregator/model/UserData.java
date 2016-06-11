@@ -8,12 +8,8 @@ import cn.bmob.v3.BmobObject;
  * Created by sangz on 2016/6/11.
  */
 public class UserData extends BmobObject {
-    public UserData() {
-        this.setTableName("user_data");
-    }
-
     private String userId;
-    private ArrayList userRegisterSet;
+    private ArrayList<String> userRegisterSet;
 
     public String getUserId() {
         return userId;
@@ -23,11 +19,11 @@ public class UserData extends BmobObject {
         this.userId = userId;
     }
 
-    public ArrayList getUserRegisterSet() {
+    public ArrayList<String> getUserRegisterSet() {
         return userRegisterSet;
     }
 
-    public void setUserRegisterSet(ArrayList userRegisterSet) {
+    public void setUserRegisterSet(ArrayList<String> userRegisterSet) {
         this.userRegisterSet = userRegisterSet;
     }
 }

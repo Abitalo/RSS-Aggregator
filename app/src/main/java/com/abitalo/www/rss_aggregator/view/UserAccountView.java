@@ -33,7 +33,6 @@ public class UserAccountView extends Fragment implements View.OnClickListener {
     private void initView() {
 
         llExit = (LinearLayout) view.findViewById(R.id.user_exit_);
-        Log.i("UserAccountView", llExit.toString());
         llExit.setOnClickListener(this);
 
         llRss = (LinearLayout) view.findViewById(R.id.user_rss_source);

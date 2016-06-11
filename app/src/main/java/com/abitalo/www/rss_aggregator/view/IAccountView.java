@@ -10,6 +10,7 @@ public interface IAccountView {
     Context getContext();
     String getUserName();
     String getPassword();
+    String getEmail();
     boolean onFailure(String msg);
     boolean onSuccess();
 }

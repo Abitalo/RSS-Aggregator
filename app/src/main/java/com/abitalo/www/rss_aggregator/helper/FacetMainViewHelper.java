@@ -47,7 +47,6 @@ public class FacetMainViewHelper extends Thread {
 //                    showToast(e.toString());
                 }
 
-                Log.i("FacetMainViewHelper", arg0.toString());
                 ArrayList<Facet> facets = new ArrayList<>();
                 facets.add(new Facet());
                 assert jsonArray != null;

@@ -41,21 +41,8 @@ public class RssSourceViewHelper extends Thread {
         query.addWhereEqualTo("facetId", facetId);
         query.findObjects(context, new FindCallback() {
             @Override
-            public void onSuccess(JSONArray arg0) {
-                JSONArray jsonArray = null;
+            public void onSuccess(JSONArray jsonArray) {
                 JSONObject jsonObject;
-                try {
-                    jsonArray = new JSONArray(arg0.toString());
-                } catch (JSONException e) {
-//                    showToast(e.toString());
-                }
-
-                try {
-                    jsonArray = new JSONArray(arg0.toString());
-                } catch (JSONException e) {
-//                    showToast(e.toString());
-                }
-
                 ArrayList<RssSource> rssSources = new ArrayList<>();
                 rssSources.add(new RssSource());
                 assert jsonArray != null;
