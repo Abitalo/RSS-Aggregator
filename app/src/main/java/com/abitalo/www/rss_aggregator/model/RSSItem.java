@@ -16,13 +16,28 @@ public class RSSItem implements Parcelable{
     private String description = null;
     private String encoded = null;
     private String author = null;
+<<<<<<< HEAD
+=======
+    private String mabstract = null;
+    private String imageUrl = null;
+>>>>>>> 16c1923c7129d3491bee375f1dd5e926e2507d9d
 
     protected RSSItem(Parcel in) {
         title = in.readString();
         pubdate = in.readString();
+<<<<<<< HEAD
         in.readStringList(categories);
         link = in.readString();
         description = in.readString();
+=======
+        categories = in.createStringArrayList();
+        link = in.readString();
+        description = in.readString();
+        encoded = in.readString();
+        author = in.readString();
+        mabstract = in.readString();
+        imageUrl = in.readString();
+>>>>>>> 16c1923c7129d3491bee375f1dd5e926e2507d9d
     }
 
     public static final Creator<RSSItem> CREATOR = new Creator<RSSItem>() {
@@ -37,14 +52,36 @@ public class RSSItem implements Parcelable{
         }
     };
 
+<<<<<<< HEAD
+=======
+    public String getMabstract() {
+        return mabstract;
+    }
+
+    public void setMabstract(String mabstract) {
+        this.mabstract = mabstract;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+>>>>>>> 16c1923c7129d3491bee375f1dd5e926e2507d9d
     public RSSItem() {
         categories = new ArrayList<String>();
     }
 
     public String getTitle() {
+<<<<<<< HEAD
 //        if (title.length() > 20) {
 //            return title.substring(0, 19) + "...";
 //        }
+=======
+>>>>>>> 16c1923c7129d3491bee375f1dd5e926e2507d9d
         return title;
     }
 
@@ -116,10 +153,23 @@ public class RSSItem implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 16c1923c7129d3491bee375f1dd5e926e2507d9d
         dest.writeString(title);
         dest.writeString(pubdate);
         dest.writeStringList(categories);
         dest.writeString(link);
         dest.writeString(description);
+<<<<<<< HEAD
     }
+=======
+        dest.writeString(encoded);
+        dest.writeString(author);
+        dest.writeString(mabstract);
+        dest.writeString(imageUrl);
+    }
+
+>>>>>>> 16c1923c7129d3491bee375f1dd5e926e2507d9d
 }

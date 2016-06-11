@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 具体源的界面布局 -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:fresco="http://schemas.android.com/tools"
+    android:clickable="true"
+    android:id="@+id/rss_source_item"
+    android:background="?android:attr/selectableItemBackground"
+    android:paddingTop="15dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:layout_height="70dp">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:src="@mipmap/google"
+        fresco:viewAspectRatio="1.78"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/rss_source_icon" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Google News"
+        android:layout_marginStart="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/rss_source_icon"
+        android:id="@+id/rss_source_title" />
+
+    <TextView
+        android:text="93K readers"
+        android:id="@+id/rss_source_reader"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="11sp"
+        android:textColor="#aaa"
+        android:layout_alignBottom="@+id/rss_source_icon"
+        android:layout_toEndOf="@+id/rss_source_icon" />
+    <ImageView
+        android:id="@+id/rss_add_source"
+        android:src="@mipmap/plus"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>
