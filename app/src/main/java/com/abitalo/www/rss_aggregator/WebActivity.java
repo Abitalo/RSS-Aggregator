@@ -8,7 +8,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+<<<<<<< HEAD
 import android.webkit.WebViewClient;
+=======
+>>>>>>> 16c1923c7129d3491bee375f1dd5e926e2507d9d
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -26,13 +29,20 @@ public class WebActivity extends AppCompatActivity {
     private Date pubDate= null;
     private Date currentDate = null;
     private final DateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 16c1923c7129d3491bee375f1dd5e926e2507d9d
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_rss_detail);
         init_view();
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 16c1923c7129d3491bee375f1dd5e926e2507d9d
     }
 
     private void init_view(){
@@ -45,7 +55,12 @@ public class WebActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+<<<<<<< HEAD
         getSupportActionBar().setTitle("Easy");
+=======
+        getSupportActionBar().setTitle("");
+
+>>>>>>> 16c1923c7129d3491bee375f1dd5e926e2507d9d
         Intent intent = getIntent();
         HashMap item = (HashMap) intent.getSerializableExtra("item");
 
@@ -84,6 +99,10 @@ public class WebActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(menuItem);
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 16c1923c7129d3491bee375f1dd5e926e2507d9d
     private void showWebView(String html)
     {
         String CSS_STYLE ="<style>* {color:#808080;max-width: 100% !important;word-wrap:break-word !important;} " +
@@ -99,6 +118,7 @@ public class WebActivity extends AppCompatActivity {
                 null);
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
         webView.requestFocus(); //触摸焦点起作用.如果不设置，则在点击网页文本输入框时，不能弹出软键盘及不响应其他的一些事件。
+<<<<<<< HEAD
 
         //                点击链接由自己处理，而不是新开Android的系统browser响应该链接。
         webView.setWebViewClient(new WebViewClient()
@@ -111,6 +131,8 @@ public class WebActivity extends AppCompatActivity {
                 return true;
             }
         });
+=======
+>>>>>>> 16c1923c7129d3491bee375f1dd5e926e2507d9d
     }
 
 }
