@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="F:\android-sdk-windows\extras\android\m2repository\com\android\support\support-annotations\23.2.1\support-annotations-23.2.1.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="ccb693bc0774fcb637246f7360de25b4af7df318">
+        <dex dex="F:\ASproject\RSS-Aggregator\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.2.1_5812f358bfc7794aa0da9dc9286f0337910cd2f5\classes.dex" />
+    </item>
+    <item
+        jar="F:\ASproject\RSS-Aggregator\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="e4d0cbb0b999604b349062f0214a0a228a7fd151">
+        <dex dex="F:\ASproject\RSS-Aggregator\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-23.2.1_4ef710beb0672e16e2026398954830cab0ae7082\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Lancelot\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.4.0\5b72bf48563ea8410e650de14aa33ff69a3e8c35\okio-1.4.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="5b72bf48563ea8410e650de14aa33ff69a3e8c35">
+        <dex dex="F:\ASproject\RSS-Aggregator\app\build\intermediates\transforms\dex\debug\folders\1000\10\okio-1.4.0_481c85c17d4ee8669caf4e4c76e8e51934ede4dd\classes.dex" />
+    </item>
+    <item
+        jar="F:\ASproject\RSS-Aggregator\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\libs\internal_impl-23.2.1.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="607a3d0b8013b4ccbfeb0b7cb293351994e021fb">
+        <dex dex="F:\ASproject\RSS-Aggregator\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.2.1_def6bc5d8dc9791397c42e6f45325bdce6bfb82a\classes.dex" />
+    </item>
+    <item
+        jar="F:\ASproject\RSS-Aggregator\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="3469cb457f10f74c28cbc05f069b6c894f6cbdd0">
+        <dex dex="F:\ASproject\RSS-Aggregator\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-23.2.1_83d8c7b97ac83d53398c79501ec40abe3e5f59f3\classes.dex" />
+    </item>
+    <item
+        jar="F:\ASproject\RSS-Aggregator\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="0e4b3bce4dba54a4090eeb1dfd32ecbc7a312cb0">
+        <dex dex="F:\ASproject\RSS-Aggregator\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_1464a4024391b520e417f4963b364ca017a27d43\classes.dex" />
+    </item>
+    <item
+        jar="F:\ASproject\RSS-Aggregator\app\build\intermediates\exploded-aar\com.android.support\design\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="72961d8b453b46e277702f18de9d210bc019e36e">
+        <dex dex="F:\ASproject\RSS-Aggregator\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-23.2.1_7a91ac7bd5ab289a43ee795ec1d5802a4a36868a\classes.dex" />
+    </item>
+    <item
+        jar="F:\ASproject\RSS-Aggregator\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="e3885783ff8926ed9e2fdcd16816c2e1e73e7aee">
+        <dex dex="F:\ASproject\RSS-Aggregator\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-23.2.1_04c742f0df573fea1eb8e18028f9067ebe089c6b\classes.dex" />
+    </item>
+    <item
+        jar="F:\ASproject\RSS-Aggregator\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="82ce13fd19cdfde0e392f03c27edeba8d4333648">
+        <dex dex="F:\ASproject\RSS-Aggregator\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-cardview-v7-23.3.0_65441fee03c3871ff1bf89251b3ef02c39c7f419\classes.dex" />
+    </item>
+    <item
+        jar="F:\ASproject\RSS-Aggregator\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="3be474b1b21b31cf2fa93fe6bd641ae108d96452">
+        <dex dex="F:\ASproject\RSS-Aggregator\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-23.2.1_f21831ba03960d0eaa27c30dc3853bc446556dcf\classes.dex" />
+    </item>
+    <item
+        jar="F:\ASproject\RSS-Aggregator\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="962721b1263922e5549cb8cfbd2ad22be4f00f1c">
+        <dex dex="F:\ASproject\RSS-Aggregator\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_c62abfef7cf5c6aebdcf465f2bc8aaa095d9dc52\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Lancelot\.gradle\caches\modules-2\files-2.1\cn.bmob.android\bmob-sdk\3.4.6\41f54bb2846705eea0de5df48ddbcba378bd54e5\bmob-sdk-3.4.6.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="41f54bb2846705eea0de5df48ddbcba378bd54e5">
+        <dex dex="F:\ASproject\RSS-Aggregator\app\build\intermediates\transforms\dex\debug\folders\1000\10\bmob-sdk-3.4.6_90b07f574adc163c26e7b5276cdb83e85c8c4b44\classes.dex" />
+    </item>
+    <item
+        jar="F:\ASproject\RSS-Aggregator\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="673d77a5bbddd766037f088e775df525c46407f0">
+        <dex dex="F:\ASproject\RSS-Aggregator\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-23.2.1_53e3f84eeef383b23ce13468e1a94a02e28dd318\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Lancelot\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp\okhttp\2.4.0\40340c0748190fe897baf7bffbc1b282734294e5\okhttp-2.4.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="40340c0748190fe897baf7bffbc1b282734294e5">
+        <dex dex="F:\ASproject\RSS-Aggregator\app\build\intermediates\transforms\dex\debug\folders\1000\10\okhttp-2.4.0_3299ac9297398522bb75efa1cf09bc6661bb87a0\classes.dex" />
+    </item>
+
+</items>
