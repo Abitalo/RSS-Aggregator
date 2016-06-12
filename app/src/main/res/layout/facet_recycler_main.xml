@@ -15,7 +15,5 @@
         android:id="@+id/facet_loading_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        android:indeterminateTint="@color/colorPrimary" />
+        android:layout_gravity="center" />
 </LinearLayout>

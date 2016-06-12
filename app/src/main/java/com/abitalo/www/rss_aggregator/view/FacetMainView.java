@@ -76,6 +76,5 @@ public class FacetMainView extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.discovery_recycler_card_view);
         final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-
     }
 }

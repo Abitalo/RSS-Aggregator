@@ -36,48 +36,52 @@ public class FacetMainViewHelper extends Thread {
     public void run() {
         BmobQuery query = new BmobQuery("facet");
         query.order("id");
-        query.findObjects(context, new FindCallback() {
-            @Override
-            public void onSuccess(JSONArray arg0) {
-                JSONArray jsonArray = null;
-                JSONObject jsonObject;
-                try {
-                    jsonArray = new JSONArray(arg0.toString());
-                } catch (JSONException e) {
-//                    showToast(e.toString());
-                }
-
-                ArrayList<Facet> facets = new ArrayList<>();
-                facets.add(new Facet());
-                assert jsonArray != null;
-                for (int i = 0; i < jsonArray.length(); i++) {
+        try {
+            query.findObjects(context, new FindCallback() {
+                @Override
+                public void onSuccess(JSONArray arg0) {
+                    JSONArray jsonArray = null;
+                    JSONObject jsonObject;
                     try {
-                        jsonObject = jsonArray.getJSONObject(i);
-                        Facet facet = new Facet();
-                        facet.setId(Integer.parseInt(jsonObject.get("id").toString()));
-                        facet.setFacetName(jsonObject.get("facetName").toString());
-                        facet.setBackgroundUrl(jsonObject.get("backgroundUrl").toString());
-                        facets.add(facet);
+                        jsonArray = new JSONArray(arg0.toString());
                     } catch (JSONException e) {
-                        e.printStackTrace();
+//                    showToast(e.toString());
                     }
-                }
-                Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList("facets", facets);
-                if (!isRunning){
-                    return;
-                }
-                Message message = new Message();
-                message.what = MessageWhat.FACET_LODE_SUCCESS;
-                message.setData(bundle);
-                handler.sendMessage(message);
 
-            }
-            @Override
-            public void onFailure(int arg0, String arg1) {
+                    ArrayList<Facet> facets = new ArrayList<>();
+                    facets.add(new Facet());
+                    assert jsonArray != null;
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        try {
+                            jsonObject = jsonArray.getJSONObject(i);
+                            Facet facet = new Facet();
+                            facet.setId(Integer.parseInt(jsonObject.get("id").toString()));
+                            facet.setFacetName(jsonObject.get("facetName").toString());
+                            facet.setBackgroundUrl(jsonObject.get("backgroundUrl").toString());
+                            facets.add(facet);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelableArrayList("facets", facets);
+                    if (!isRunning){
+                        return;
+                    }
+                    Message message = new Message();
+                    message.what = MessageWhat.FACET_LODE_SUCCESS;
+                    message.setData(bundle);
+                    handler.sendMessage(message);
+
+                }
+                @Override
+                public void onFailure(int arg0, String arg1) {
 //                showToast("查询失败:" + arg1);
-            }
-        });
+                }
+            });
+        }catch (Exception exception){
+            exception.printStackTrace();
+        }
     }
 
     public void stopLoad(){
