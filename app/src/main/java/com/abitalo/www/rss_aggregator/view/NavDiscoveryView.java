@@ -40,9 +40,12 @@ import cn.bmob.v3.listener.FindCallback;
  */
 public class NavDiscoveryView extends Fragment {
     private View view = null;
+    private EditText etSearchInput;
 
     private FragmentManager fragmentManager;
     private DrawerLayout drawer;
+    private ImageView ivSearchButton;
+    private ImageView ivBackButton;
 
 
     @Nullable
@@ -56,9 +59,12 @@ public class NavDiscoveryView extends Fragment {
     private void initView() {
         fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().add(R.id.nav_discovery_main, new FacetMainView(), "facet_view").commit();
-        EditText etSearchInput = (EditText) view.findViewById(R.id.search_input);
-        ImageView ivSearchButton = (ImageView) view.findViewById(R.id.search_icon);
-        ImageView ivBackButton = (ImageView) view.findViewById(R.id.back_icon);
+
+
+        etSearchInput = (EditText) view.findViewById(R.id.search_input);
+
+        ivSearchButton = (ImageView) view.findViewById(R.id.search_icon);
+        ivBackButton = (ImageView) view.findViewById(R.id.back_icon);
 
         etSearchInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -96,7 +102,21 @@ public class NavDiscoveryView extends Fragment {
     }
 
     private void submitText() {
-        Toast.makeText(getContext(), "here you are", Toast.LENGTH_SHORT).show();
+        String inputText = etSearchInput.getText().toString();
+        if (inputText.equals("")){
+            Toast.makeText(getContext(), "请输入搜索内容", Toast.LENGTH_SHORT).show();
+        }else if (inputText.indexOf('.') == -1) {
+//            Toast.makeText(getContext(), "here you are", Toast.LENGTH_SHORT).show();
+            fragmentManager.beginTransaction().replace(R.id.nav_discovery_main, new RssSourceView(inputText, RssSourceView.SEARCH), "rss_source").commit();
+        } else {
+            if (!inputText.startsWith("http://")) {
+                inputText = "http://" + inputText;
+            }
+            getFragmentManager().beginTransaction().replace(R.id.fragment_content,
+                    RSSListView.newInstance(inputText), "fragment_view").commit();
+            DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(getActivity().findViewById(R.id.discovery_nav_view));
+        }
     }
 
 }

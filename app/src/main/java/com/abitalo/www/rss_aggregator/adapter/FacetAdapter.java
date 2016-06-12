@@ -103,7 +103,7 @@ public class FacetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private void showResource(int facetId) {
         FragmentManager fragmentManager = fragment.getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.nav_discovery_main, new RssSourceView(facetId), "rss_source").commit();
+        fragmentManager.beginTransaction().replace(R.id.nav_discovery_main, new RssSourceView(facetId, RssSourceView.FACET), "rss_source").commit();
     }
 
 

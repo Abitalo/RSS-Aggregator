@@ -140,7 +140,11 @@ public class RSSListView extends Fragment {
                                     .setAction("Action", null).show();
                         } else {
                             if (null !=bundle.getString("title")){
-                                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(bundle.getString("title"));
+                                try {
+                                    ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(bundle.getString("title"));
+                                }catch (Exception exception){
+                                    Log.e("RssListView", "Some thing wrong");
+                                }
                             }
 >>>>>>> 16c1923c7129d3491bee375f1dd5e926e2507d9d
                             listAdapter = new ListAdapter(list);
@@ -188,7 +192,8 @@ public class RSSListView extends Fragment {
 =======
     }
 
-    private void releaseRSSParser(){
+    public void releaseRSSParser(){
+//        currentRSS.stopPulling();
         currentRSS = null;
     }
 

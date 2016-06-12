@@ -31,6 +31,8 @@ public class UserRssEditHelper {
     private String url;
     private String userId;
     private String userDataId;
+    public static int ADD = 0;
+    public static int DELETE = 1;
     private ArrayList<String> userRegisterSet = new ArrayList<>();
 
     public UserRssEditHelper(Context context, String url){
@@ -42,7 +44,7 @@ public class UserRssEditHelper {
         userName =sharedPreferences.getString("name", "");
     }
 
-    public void getUserId(final String option){
+    public void getUserId(final int option){
         BmobQuery<MeetUser> bmobQuery = new BmobQuery<>();
         bmobQuery.addWhereEqualTo("username", userName);
         bmobQuery.addQueryKeys("objectId");
@@ -53,8 +55,6 @@ public class UserRssEditHelper {
             public void onSuccess(List<MeetUser> list) {
                 userId = list.get(0).getObjectId();
                 getUserDataId(option);
-
-                
             }
 
             @Override
@@ -65,7 +65,7 @@ public class UserRssEditHelper {
         });
     }
 
-    private void getUserDataId(final String option){
+    private void getUserDataId(final int option){
 //        BmobQuery<UserData> bmobQuery = new BmobQuery<>();
         BmobQuery bmobQuery = new BmobQuery("UserData");
         bmobQuery.addWhereEqualTo("userId", userId);
@@ -91,9 +91,9 @@ public class UserRssEditHelper {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                if (option.endsWith("add") ){
+                if (option == ADD ){
                     checkContain();
-                }else if (option == "delete"){
+                }else if (option == DELETE){
                     deleteContain();
                 }
                 updateUserData();
