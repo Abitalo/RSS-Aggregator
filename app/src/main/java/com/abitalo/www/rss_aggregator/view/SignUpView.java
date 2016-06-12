@@ -10,6 +10,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +49,11 @@ public class SignUpView extends Fragment implements View.OnClickListener, IAccou
     }
 
     private void initView() {
+        try {
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("用户注册");
+        }catch (Exception exception){
+            Log.e("RssListView", "Some thing wrong");
+        }
         etFullName = (EditText) view.findViewById(R.id.sign_full_name);
         etEmail = (EditText) view.findViewById(R.id.sign_user_mail);
         etPassword = (EditText) view.findViewById(R.id.sign_user_pass);
@@ -119,6 +126,8 @@ public class SignUpView extends Fragment implements View.OnClickListener, IAccou
         SharedPreferences.Editor editor = mySharedPreferences.edit();
         editor.putString("name", getUserName());
         editor.apply();
+
+
         return false;
     }
 
@@ -126,6 +135,8 @@ public class SignUpView extends Fragment implements View.OnClickListener, IAccou
         onDestroy();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.nav_account, new UserAccountView(), "user_account").commit();
-        fragmentManager.beginTransaction().replace(R.id.fragment_content, new MainContentDemoView(), "Main content").commit();
+        Log.i("SignUpView", "is here visited");
+        fragmentManager.beginTransaction().replace(R.id.fragment_content,
+                RSSListView.newInstance("https://www.zhihu.com/rss"), "fragment_view").commit();
     }
 }

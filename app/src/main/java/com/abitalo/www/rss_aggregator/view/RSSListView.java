@@ -102,7 +102,11 @@ public class RSSListView extends Fragment {
                                     .setAction("Action", null).show();
                         } else {
                             if (null !=bundle.getString("title")){
-                                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(bundle.getString("title"));
+                                try {
+                                    ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(bundle.getString("title"));
+                                }catch (Exception exception){
+                                    Log.e("RssListView", "Some thing wrong");
+                                }
                             }
                             listAdapter = new ListAdapter(list);
                             listAdapter.setListener(new ItemOnClickListener() {

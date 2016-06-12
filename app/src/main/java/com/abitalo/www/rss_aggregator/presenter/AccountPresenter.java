@@ -52,7 +52,7 @@ public class AccountPresenter {
         BmobUser user = new BmobUser();
         user.setUsername(username);
         user.setPassword(password);
-//        user.setEmail(email);
+        user.setEmail(email);
         user.signUp(iAccountView.getContext(), new SaveListener() {
             @Override
             public void onSuccess() {

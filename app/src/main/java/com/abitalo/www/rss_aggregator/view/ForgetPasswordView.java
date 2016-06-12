@@ -3,28 +3,34 @@ package com.abitalo.www.rss_aggregator.view;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.abitalo.www.rss_aggregator.R;
+
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.listener.ResetPasswordByEmailListener;
 
 /**
  * Created by sangzhenya on 2016/5/8.
  * 找回密码界面
  */
 public class ForgetPasswordView extends Fragment implements View.OnClickListener {
-    Context context = null;
-    View view = null;
+    private View view = null;
 
-    EditText etUserEmail = null;
-    Button etFindPassword = null;
-    TextView tvBack2Login = null;
+    private EditText etUserEmail = null;
+    private Button etFindPassword = null;
+    private TextView tvBack2Login = null;
 
     @Nullable
     @Override
@@ -35,6 +41,11 @@ public class ForgetPasswordView extends Fragment implements View.OnClickListener
     }
 
     private void initView() {
+        try {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("找回密码");
+        } catch (Exception exception) {
+            Log.e("RssListView", "Some thing wrong");
+        }
         etUserEmail = (EditText) view.findViewById(R.id.edit_user_name);
         etFindPassword = (Button) view.findViewById(R.id.forget_send);
         tvBack2Login = (TextView) view.findViewById(R.id.forget_login);
@@ -57,6 +68,19 @@ public class ForgetPasswordView extends Fragment implements View.OnClickListener
 
     private void findPassword() {
         //// TODO:添加找回密码操作 2016/5/9
+        BmobUser.resetPasswordByEmail(getContext(), etUserEmail.getText().toString(), new ResetPasswordByEmailListener() {
+            @Override
+            public void onSuccess() {
+//                Snackbar.make(view, "找回成功", Snackbar.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "邮件发送成功，请按照邮箱提示操作！", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+                Log.i("ForgetPasswordView", "code:"+i);
+                Log.i("ForgetPasswordView", "code:"+s);
+            }
+        });
     }
 
     private void gotoLogin() {
