@@ -135,7 +135,8 @@ public class RSSListView extends Fragment {
         };
     }
 
-    private void releaseRSSParser(){
+    public void releaseRSSParser(){
+//        currentRSS.stopPulling();
         currentRSS = null;
     }
 

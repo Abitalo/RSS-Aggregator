@@ -9,4 +9,6 @@ public class MessageWhat {
 
     public static final int FACET_LODE_SUCCESS = 495;
     public static final int RSS_SOURCE_LOAD_SUCCESS = 561;
+
+    public  static final int USER_INFO_LOAD_SUCCESS = 663;
 }

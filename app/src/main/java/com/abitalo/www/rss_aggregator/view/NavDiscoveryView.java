@@ -102,13 +102,13 @@ public class NavDiscoveryView extends Fragment {
     }
 
     private void submitText() {
-//        Toast.makeText(getContext(), "here you are", Toast.LENGTH_SHORT).show();
         String inputText = etSearchInput.getText().toString();
-        if (inputText.startsWith("#")) {
-            Toast.makeText(getContext(), "here you are", Toast.LENGTH_SHORT).show();
-            // TODO: 2016/6/12 单词查询 
+        if (inputText.equals("")){
+            Toast.makeText(getContext(), "请输入搜索内容", Toast.LENGTH_SHORT).show();
+        }else if (inputText.indexOf('.') == -1) {
+//            Toast.makeText(getContext(), "here you are", Toast.LENGTH_SHORT).show();
+            fragmentManager.beginTransaction().replace(R.id.nav_discovery_main, new RssSourceView(inputText, RssSourceView.SEARCH), "rss_source").commit();
         } else {
-            // TODO: 2016/6/12 URL查询
             if (!inputText.startsWith("http://")) {
                 inputText = "http://" + inputText;
             }

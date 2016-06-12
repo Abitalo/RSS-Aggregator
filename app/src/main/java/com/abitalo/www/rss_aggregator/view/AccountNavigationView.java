@@ -66,11 +66,7 @@ public class AccountNavigationView extends NavigationView implements NavigationV
         SharedPreferences.Editor editor = mySharedPreferences.edit();
         editor.putString("name", "");
         editor.apply();
-        //// TODO: 2016/6/4 需要更新界面切换 
-        /*Log.i("here,", "you are");
-        FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_content, new WelcomeNav(), "account_nav").commit();*/
-    }
+     }
 
     @Override
     public void onClick(View v) {

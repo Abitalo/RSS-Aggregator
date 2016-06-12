@@ -67,11 +67,9 @@ public class ForgetPasswordView extends Fragment implements View.OnClickListener
     }
 
     private void findPassword() {
-        //// TODO:添加找回密码操作 2016/5/9
         BmobUser.resetPasswordByEmail(getContext(), etUserEmail.getText().toString(), new ResetPasswordByEmailListener() {
             @Override
             public void onSuccess() {
-//                Snackbar.make(view, "找回成功", Snackbar.LENGTH_SHORT).show();
                 Toast.makeText(getContext(), "邮件发送成功，请按照邮箱提示操作！", Toast.LENGTH_LONG).show();
             }
 

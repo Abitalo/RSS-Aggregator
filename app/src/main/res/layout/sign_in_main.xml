@@ -23,12 +23,12 @@
         android:layout_marginTop="10dp"
         android:layout_width="300dp"
         app:met_floatingLabel="highlight"
-        app:met_floatingLabelText="@string/password"
+        app:met_floatingLabelText="@string/user_name"
         android:id="@+id/edit_user_name"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-        android:hint="@string/password"/>
+        android:hint="@string/user_name"/>
 
     <com.rengwuxian.materialedittext.MaterialEditText
         app:met_underlineColor="#666"

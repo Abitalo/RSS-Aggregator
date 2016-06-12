@@ -23,6 +23,7 @@ import com.abitalo.www.rss_aggregator.R;
 import com.abitalo.www.rss_aggregator.adapter.RssSourceAdapter;
 import com.abitalo.www.rss_aggregator.constants.MessageWhat;
 import com.abitalo.www.rss_aggregator.helper.RssSourceViewHelper;
+import com.abitalo.www.rss_aggregator.helper.RssSourceViewSearchHelper;
 import com.abitalo.www.rss_aggregator.helper.UserRssEditHelper;
 import com.abitalo.www.rss_aggregator.model.RssSource;
 
@@ -44,20 +45,28 @@ public class RssSourceView extends Fragment {
     private View view;
     private int facetId;
     private Handler handler;
-    private RssSourceViewHelper rssSourceViewHelper;
     private ArrayList<RssSource> rssSources;
     private RecyclerView recyclerView;
 
+    public static int FACET = 0;
+    public static int SEARCH = 1;
+    private int option;
     private ProgressBar progressBar;
-
+    private String keyword;
 
 
     public RssSourceView() {
-        this(1);
+        this(1, FACET);
     }
 
-    public RssSourceView(int facetId) {
+    public RssSourceView(int facetId , int option) {
         this.facetId = facetId;
+        this.option = option;
+    }
+
+    public RssSourceView(String keyword , int option) {
+        this.keyword = keyword;
+        this.option = option;
     }
 
     @Nullable
@@ -71,8 +80,14 @@ public class RssSourceView extends Fragment {
     }
 
     private void loadData() {
-        rssSourceViewHelper = new RssSourceViewHelper(getContext(),handler,facetId);
-        rssSourceViewHelper.start();
+        if (FACET == option){
+            RssSourceViewHelper rssSourceViewHelper = new RssSourceViewHelper(getContext(), handler, facetId);
+            rssSourceViewHelper.start();
+        }else if(SEARCH == option){
+            RssSourceViewSearchHelper rssSourceViewSearchHelper = new RssSourceViewSearchHelper(getContext(), handler, keyword);
+            rssSourceViewSearchHelper.start();
+        }
+
     }
 
     private void initHandler() {
@@ -97,15 +112,13 @@ public class RssSourceView extends Fragment {
         rssSourceAdapter.setOnItemClickListener(new RssSourceAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View v, String data) {
-//                    Toast.makeText(getContext(), rssSources.get(Integer.parseInt(v.getTag().toString())).getRssUrl(), Toast.LENGTH_SHORT).show();
                 if (v.getId() == R.id.rss_add_source){
                     v.setVisibility(View.GONE);
 
                     UserRssEditHelper userRssEditHelper = new UserRssEditHelper(getContext(), v.getTag().toString());
-                    userRssEditHelper.getUserId("add");
-                    Toast.makeText(getContext(), v.getTag().toString(), Toast.LENGTH_SHORT).show();
+                    userRssEditHelper.getUserId(UserRssEditHelper.ADD);
+//                    Toast.makeText(getContext(), v.getTag().toString(), Toast.LENGTH_SHORT).show();
                 }else {
-                    Log.i("RssSourceView", v.getTag()+"::");
                     getFragmentManager().beginTransaction().replace(R.id.fragment_content,RSSListView.newInstance(v.getTag().toString()), "fragment_view").commit();
 
                     DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
@@ -128,7 +141,7 @@ public class RssSourceView extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("RssSourceView", "here you are");
+//        Log.i("RssSourceView", "here you are");
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
@@ -143,8 +156,4 @@ public class RssSourceView extends Fragment {
             }
         });
     }
-
-
-
-
 }

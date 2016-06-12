@@ -36,7 +36,7 @@
         android:layout_marginTop="10dp"
         android:layout_width="300dp"
         app:met_floatingLabel="highlight"
-        app:met_floatingLabelText="@string/user_name"
+        app:met_floatingLabelText="@string/user_email"
         android:id="@+id/sign_user_mail"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"

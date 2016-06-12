@@ -42,7 +42,7 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
     private ProgressBar progressBar;
     private List<RssSource> rssSourceList;
     private SlideAndDragListView<RssSource> mListView;
-    private PullToRefreshView mPullToRefreshView;
+//    private PullToRefreshView mPullToRefreshView;
     private ArrayList<Menu> mMenuList;
     private Handler handler;
 
@@ -73,8 +73,6 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
 
     private void continueInitView() {
         progressBar.setVisibility(View.GONE);
-        mPullToRefreshView.setRefreshing(true);
-        mPullToRefreshView.setRefreshing(false);
         initUiAndListener();
     }
 
@@ -87,7 +85,7 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
         progressBar = (ProgressBar) view.findViewById(R.id.user_rss_loading);
         progressBar.setVisibility(View.VISIBLE);
 
-        mPullToRefreshView = (PullToRefreshView) view.findViewById(R.id.pull_to_refresh);
+       /* mPullToRefreshView = (PullToRefreshView) view.findViewById(R.id.pull_to_refresh);
         mPullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -98,7 +96,7 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
                     }
                 }, 50);
             }
-        });
+        });*/
         initMenu();
     }
 
@@ -110,6 +108,7 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
     private void initUiAndListener() {
         mListView = (SlideAndDragListView) view.findViewById(R.id.user_rss_display);
         mListView.setMenu(mMenuList);
+        mAdapter.notifyDataSetChanged();
         mListView.setAdapter(mAdapter);
         mListView.setOnListItemLongClickListener(this);
         mListView.setOnDragListener(this, rssSourceList);
@@ -316,7 +315,7 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
     @Override
     public void onItemDelete(View view, int position) {
         UserRssEditHelper userRssEditHelper = new UserRssEditHelper(getContext(), rssSourceList.get(position).getRssUrl());
-        userRssEditHelper.getUserId("delete");
+        userRssEditHelper.getUserId(UserRssEditHelper.DELETE);
         rssSourceList.remove(position - mListView.getHeaderViewsCount());
         mAdapter.notifyDataSetChanged();
     }
