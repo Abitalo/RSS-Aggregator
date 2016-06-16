@@ -1,10 +1,6 @@
 [
     {
-        "merged": "F:\\ASproject\\RSS-Aggregator\\app\\build\\intermediates\\res\\merged\\debug\\menu\\activity_main_drawer.xml",
-        "source": "F:\\ASproject\\RSS-Aggregator\\app\\src\\main\\res\\menu\\activity_main_drawer.xml"
-    },
-    {
-        "merged": "F:\\ASproject\\RSS-Aggregator\\app\\build\\intermediates\\res\\merged\\debug\\menu\\dragger_main_menu.xml",
-        "source": "F:\\ASproject\\RSS-Aggregator\\app\\src\\main\\res\\menu\\dragger_main_menu.xml"
+        "merged": "F:\\ASproject\\RSS-Aggregator\\app\\build\\intermediates\\res\\merged\\debug\\menu\\rss_web_menu.xml",
+        "source": "F:\\ASproject\\RSS-Aggregator\\app\\src\\main\\res\\menu\\rss_web_menu.xml"
     }
 ]

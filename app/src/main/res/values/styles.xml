@@ -27,16 +27,7 @@
         <item name="android:background">@drawable/explore_button_shape</item>
         <item name="android:textColor">@color/black</item>
     </style>
-<<<<<<< HEAD
     <style name="WhiteButton">
         <item name="colorButtonNormal">@android:color/white</item>
     </style>
-=======
-
-    <style name="WhiteButton">
-        <item name="colorButtonNormal">@android:color/white</item>
-    </style>
-
-
->>>>>>> 16c1923c7129d3491bee375f1dd5e926e2507d9d
 </resources>

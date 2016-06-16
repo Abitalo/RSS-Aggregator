@@ -37,11 +37,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".WebActivity"
+            android:name="com.abitalo.www.rss_aggregator.WebActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
