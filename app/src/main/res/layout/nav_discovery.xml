@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- APP右侧页面总览布局 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:paddingTop="50dp"
+        android:background="@drawable/background_with_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+        <ImageView
+            android:id="@+id/back_icon"
+            android:layout_width="25dp"
+            android:layout_marginTop="13dp"
+            android:src="@mipmap/left"
+            android:layout_marginStart="10dp"
+            android:layout_height="25dp" />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0.7"
+            android:id="@+id/search_input"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="Search..."/>
+        <ImageView
+            android:id="@+id/search_icon"
+            android:contentDescription="@string/add_content"
+            android:src="@mipmap/search"
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="15dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/nav_discovery_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </FrameLayout>
+</LinearLayout>
