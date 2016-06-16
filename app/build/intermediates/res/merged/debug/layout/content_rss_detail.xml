@@ -1,22 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-=======
+
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
->>>>>>> 16c1923c7129d3491bee375f1dd5e926e2507d9d
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-<<<<<<< HEAD
-    android:orientation="vertical"
-    android:fitsSystemWindows="true"
-=======
+
     android:fitsSystemWindows="true"
     android:orientation="vertical"
->>>>>>> 16c1923c7129d3491bee375f1dd5e926e2507d9d
     android:weightSum="1">
 
     <android.support.design.widget.AppBarLayout
@@ -33,10 +25,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 16c1923c7129d3491bee375f1dd5e926e2507d9d
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
