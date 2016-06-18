@@ -1,10 +1,5 @@
 package com.abitalo.www.rss_aggregator.util;
 
-<<<<<<< HEAD
-import android.util.Log;
-
-=======
->>>>>>> 16c1923c7129d3491bee375f1dd5e926e2507d9d
 import com.abitalo.www.rss_aggregator.model.RSSFeed;
 import com.abitalo.www.rss_aggregator.model.RSSItem;
 
@@ -125,10 +120,6 @@ public class RSSHandler extends DefaultHandler {
             return;
         }
         else if ("description".equals(localName)) {
-<<<<<<< HEAD
-            if(isInItem)
-                rssItem.setDescription(string);
-=======
             if(isInItem) {
                 rssItem.setDescription(string);
                 if(null==rssItem.getImageUrl()){
@@ -138,7 +129,6 @@ public class RSSHandler extends DefaultHandler {
                     rssItem.setMabstract(RSSContentFilter.getAbstract(string));
                 }
             }
->>>>>>> 16c1923c7129d3491bee375f1dd5e926e2507d9d
             currentFlag = 0;
             return;
         }
@@ -165,10 +155,6 @@ public class RSSHandler extends DefaultHandler {
             return;
         }
         else if("encoded".equals(localName)){
-<<<<<<< HEAD
-            if(isInItem)
-                rssItem.setEncoded(string);
-=======
             if(isInItem) {
                 rssItem.setEncoded(string);
                 if(null==rssItem.getImageUrl()){
@@ -178,7 +164,6 @@ public class RSSHandler extends DefaultHandler {
                     rssItem.setMabstract(RSSContentFilter.getAbstract(string));
                 }
             }
->>>>>>> 16c1923c7129d3491bee375f1dd5e926e2507d9d
             currentFlag= 0 ;
             return;
         }
