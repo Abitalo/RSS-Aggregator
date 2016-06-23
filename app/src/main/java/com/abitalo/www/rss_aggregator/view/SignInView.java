@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.abitalo.www.rss_aggregator.R;
 import com.abitalo.www.rss_aggregator.presenter.AccountPresenter;
 import com.abitalo.www.rss_aggregator.util.MD5Encrypt;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 /**
  * Created by sangzhenya on 2016/5/8.
@@ -32,8 +33,8 @@ public class SignInView extends Fragment implements View.OnClickListener, IAccou
 
     View view = null;
 
-    EditText etUserName = null;
-    EditText etPassword = null;
+    MaterialEditText etUserName = null;
+    MaterialEditText etPassword = null;
     Button btnLogin = null;
     TextView tvForgetPassword = null;
     TextView tvSignUp = null;
@@ -53,8 +54,8 @@ public class SignInView extends Fragment implements View.OnClickListener, IAccou
         } catch (Exception exception) {
             Log.e("RssListView", "Some thing wrong");
         }
-        etUserName = (EditText) view.findViewById(R.id.edit_user_name);
-        etPassword = (EditText) view.findViewById(R.id.edit_user_password);
+        etUserName = (MaterialEditText) view.findViewById(R.id.edit_user_name);
+        etPassword = (MaterialEditText) view.findViewById(R.id.edit_user_password);
 
         btnLogin = (Button) view.findViewById(R.id.login_login);
 
@@ -86,26 +87,35 @@ public class SignInView extends Fragment implements View.OnClickListener, IAccou
 
     private void sign() {
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_content, new SignUpView(), "sign_up").commit();
+        fragmentManager.beginTransaction().replace(R.id.fragment_content, new SignUpView(), "sign_up").addToBackStack(null).commit();
     }
 
     private void forget() {
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_content, new ForgetPasswordView(), "forget_password").commit();
+        fragmentManager.beginTransaction().replace(R.id.fragment_content, new ForgetPasswordView(), "forget_password").addToBackStack(null).commit();
 
     }
 
     private void showMenu() {
         onDestroy();
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.nav_account, new UserAccountView(), "user_account").commit();
+        fragmentManager.beginTransaction().replace(R.id.nav_account, new UserAccountView(), "user_account").addToBackStack(null).commit();
         Log.i("SignInView", "is here visited");
         getFragmentManager().beginTransaction().replace(R.id.fragment_content,
-                RSSListView.newInstance("https://www.zhihu.com/rss"), "fragment_view").commit();
+                RSSListView.newInstance("https://www.zhihu.com/rss",11), "fragment_view").addToBackStack(null).commit();
     }
 
     private void login() {
-        presenter.login();
+        if (etUserName.getText().toString().equals("")){
+            etUserName.setError("用户名为空");
+        }else {
+            if(etPassword.getText().toString().equals("")){
+                etPassword.setError("密码为空");
+            }else {
+                presenter.login();
+            }
+        }
+
     }
 
     @Override
@@ -125,7 +135,7 @@ public class SignInView extends Fragment implements View.OnClickListener, IAccou
 
     @Override
     public boolean onFailure(String msg) {
-        Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show();
+        etPassword.setError(msg);
         return false;
     }
 

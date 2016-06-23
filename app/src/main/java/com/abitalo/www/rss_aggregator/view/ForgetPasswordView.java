@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.abitalo.www.rss_aggregator.R;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.ResetPasswordByEmailListener;
@@ -28,9 +29,7 @@ import cn.bmob.v3.listener.ResetPasswordByEmailListener;
 public class ForgetPasswordView extends Fragment implements View.OnClickListener {
     private View view = null;
 
-    private EditText etUserEmail = null;
-    private Button etFindPassword = null;
-    private TextView tvBack2Login = null;
+    private MaterialEditText etUserEmail = null;
 
     @Nullable
     @Override
@@ -46,9 +45,9 @@ public class ForgetPasswordView extends Fragment implements View.OnClickListener
         } catch (Exception exception) {
             Log.e("RssListView", "Some thing wrong");
         }
-        etUserEmail = (EditText) view.findViewById(R.id.edit_user_name);
-        etFindPassword = (Button) view.findViewById(R.id.forget_send);
-        tvBack2Login = (TextView) view.findViewById(R.id.forget_login);
+        etUserEmail = (MaterialEditText) view.findViewById(R.id.edit_user_name);
+        Button etFindPassword = (Button) view.findViewById(R.id.forget_send);
+        TextView tvBack2Login = (TextView) view.findViewById(R.id.forget_login);
 
         etFindPassword.setOnClickListener(this);
         tvBack2Login.setOnClickListener(this);
@@ -77,6 +76,7 @@ public class ForgetPasswordView extends Fragment implements View.OnClickListener
             public void onFailure(int i, String s) {
                 Log.i("ForgetPasswordView", "code:"+i);
                 Log.i("ForgetPasswordView", "code:"+s);
+                etUserEmail.setError(s);
             }
         });
     }

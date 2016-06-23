@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.abitalo.www.rss_aggregator.R;
 import com.abitalo.www.rss_aggregator.presenter.AccountPresenter;
 import com.abitalo.www.rss_aggregator.util.MD5Encrypt;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 /**
  * Created by sangzhenya on 2016/5/8.
@@ -32,10 +33,10 @@ public class SignUpView extends Fragment implements View.OnClickListener, IAccou
     DrawerLayout drawer = null;
     View view = null;
 
-    EditText etFullName = null;
-    EditText etEmail = null;
-    EditText etPassword = null;
-    EditText etConfirmPassword = null;
+    MaterialEditText etFullName = null;
+    MaterialEditText etEmail = null;
+    MaterialEditText etPassword = null;
+    MaterialEditText etConfirmPassword = null;
 
     Button btnCreateAccount = null;
     TextView tvExist2Login = null;
@@ -50,14 +51,14 @@ public class SignUpView extends Fragment implements View.OnClickListener, IAccou
 
     private void initView() {
         try {
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("用户注册");
-        }catch (Exception exception){
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("用户注册");
+        } catch (Exception exception) {
             Log.e("RssListView", "Some thing wrong");
         }
-        etFullName = (EditText) view.findViewById(R.id.sign_full_name);
-        etEmail = (EditText) view.findViewById(R.id.sign_user_mail);
-        etPassword = (EditText) view.findViewById(R.id.sign_user_pass);
-        etConfirmPassword = (EditText) view.findViewById(R.id.sign_up_edit_confirm_password);
+        etFullName = (MaterialEditText) view.findViewById(R.id.sign_full_name);
+        etEmail = (MaterialEditText) view.findViewById(R.id.sign_user_mail);
+        etPassword = (MaterialEditText) view.findViewById(R.id.sign_user_pass);
+        etConfirmPassword = (MaterialEditText) view.findViewById(R.id.sign_up_edit_confirm_password);
 
         btnCreateAccount = (Button) view.findViewById(R.id.sign_login);
 
@@ -85,14 +86,29 @@ public class SignUpView extends Fragment implements View.OnClickListener, IAccou
 
     private void signIn() {
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_content, new SignInView(), "sign_in").commit();
+        fragmentManager.beginTransaction().replace(R.id.fragment_content, new SignInView(), "sign_in").addToBackStack(null).commit();
     }
 
     private void create() {
-        if (etPassword.getText().toString().equals(etConfirmPassword.getText().toString())) {
-            presenter.register();
+        if (etFullName.getText().toString().equals("")) {
+            etFullName.setError("用户名不可为空");
         } else {
-            Snackbar.make(view, "Enter the password twice inconsistent!!", Snackbar.LENGTH_SHORT).show();
+            if (etEmail.getText().toString().equals("")) {
+                etEmail.setError("用户名不可为空");
+            } else {
+                if (etPassword.getText().toString().equals("")) {
+                    etPassword.setError("密码不可为空");
+                } else {
+                    if (etConfirmPassword.getText().toString().equals("")) {
+                        etConfirmPassword.setError("确认密码不可为空");
+                    }else if(etPassword.getText().toString().equals(etConfirmPassword.getText().toString())){
+                        presenter.register();
+                    }else {
+                        etPassword.setError("两次输入密码不一致");
+                        etConfirmPassword.setError("两次输入密码不一致");
+                    }
+                }
+            }
         }
     }
 
@@ -113,7 +129,12 @@ public class SignUpView extends Fragment implements View.OnClickListener, IAccou
 
     @Override
     public boolean onFailure(String msg) {
-        Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show();
+//        Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show();
+        if (msg.contains("username")){
+            etFullName.setError(msg);
+        }else{
+            etEmail.setError(msg);
+        }
         return false;
     }
 
@@ -121,7 +142,7 @@ public class SignUpView extends Fragment implements View.OnClickListener, IAccou
     public boolean onSuccess() {
         showMenu();
         Snackbar.make(view, "Success!", Snackbar.LENGTH_SHORT).show();
-        SharedPreferences mySharedPreferences= getContext().getSharedPreferences("userAuthentication",
+        SharedPreferences mySharedPreferences = getContext().getSharedPreferences("userAuthentication",
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = mySharedPreferences.edit();
         editor.putString("name", getUserName());
@@ -134,9 +155,9 @@ public class SignUpView extends Fragment implements View.OnClickListener, IAccou
     private void showMenu() {//将来需要使用从云端获得的用户数据作为参数，然后使用adapter根据用户数据填充菜单。。
         onDestroy();
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.nav_account, new UserAccountView(), "user_account").commit();
+        fragmentManager.beginTransaction().replace(R.id.nav_account, new UserAccountView(), "user_account").addToBackStack(null).commit();
         Log.i("SignUpView", "is here visited");
         fragmentManager.beginTransaction().replace(R.id.fragment_content,
-                RSSListView.newInstance("https://www.zhihu.com/rss"), "fragment_view").commit();
+                RSSListView.newInstance("https://www.zhihu.com/rss", 11), "fragment_view").addToBackStack(null).commit();
     }
 }

@@ -24,7 +24,7 @@ import com.abitalo.www.rss_aggregator.constants.Messages;
 import com.abitalo.www.rss_aggregator.listener.ItemOnClickListener;
 import com.abitalo.www.rss_aggregator.model.RSSItem;
 import com.abitalo.www.rss_aggregator.presenter.RSSParser;
-import com.abitalo.www.rss_aggregator.util.ListAdapter;
+import com.abitalo.www.rss_aggregator.adapter.ListAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +35,7 @@ import java.util.HashMap;
  */
 public class RSSListView extends Fragment {
     private static final String RSSURL = "url";
+    private static Integer facetId ;
     private View view = null;
     private String url = null;
     private RecyclerView recyclerView = null;
@@ -44,9 +45,10 @@ public class RSSListView extends Fragment {
     private ProgressBar progressBar = null;
     private RSSParser currentRSS = null;
 
-    public static Fragment newInstance(String arg){
+    public static Fragment newInstance(String arg,Integer type){
         RSSListView fragment = new RSSListView();
         Bundle bundle = new Bundle();
+        facetId=type;
         bundle.putString(RSSURL,arg);
         fragment.setArguments(bundle);
 
@@ -114,6 +116,7 @@ public class RSSListView extends Fragment {
                                 public void onItemClick(View view, HashMap item) {
                                     Intent intent = new Intent(getActivity(),WebActivity.class);
                                     intent.putExtra("item",item);
+                                    intent.putExtra("facetId",facetId);
                                     startActivity(intent);
                                 }
                             });

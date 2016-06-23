@@ -1,11 +1,6 @@
 package com.abitalo.www.rss_aggregator.presenter;
 
-import android.os.Handler;
-import android.os.Message;
-
-import com.abitalo.www.rss_aggregator.MainActivity;
 import com.abitalo.www.rss_aggregator.helper.RegisterHelper;
-import com.abitalo.www.rss_aggregator.model.UserData;
 import com.abitalo.www.rss_aggregator.view.IAccountView;
 
 import cn.bmob.v3.BmobUser;

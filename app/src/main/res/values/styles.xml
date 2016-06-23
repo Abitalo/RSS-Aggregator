@@ -31,6 +31,9 @@
     <style name="WhiteButton">
         <item name="colorButtonNormal">@android:color/white</item>
     </style>
+    <style name="FacebookBlueButton">
+        <item name="colorButtonNormal">@color/colorPrimaryDark</item>
+    </style>
 
 
 </resources>

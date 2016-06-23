@@ -18,7 +18,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/userPhoto"
+                    android:id="@+id/user_icon"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginStart="20dp"
@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:paddingTop="65dp"
-                    android:layout_toEndOf="@+id/userPhoto"
+                    android:layout_toEndOf="@id/user_icon"
                     android:orientation="vertical">
 
                     <TextView

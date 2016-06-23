@@ -1,5 +1,6 @@
 package com.abitalo.www.rss_aggregator.view;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,20 +19,29 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.abitalo.www.rss_aggregator.R;
+import com.abitalo.www.rss_aggregator.constants.Conf;
 import com.abitalo.www.rss_aggregator.constants.MessageWhat;
+import com.abitalo.www.rss_aggregator.entity.UserData;
 import com.abitalo.www.rss_aggregator.helper.UserRssEditHelper;
 import com.abitalo.www.rss_aggregator.helper.UserRssSourceHelper;
-import com.abitalo.www.rss_aggregator.model.RssSource;
+import com.abitalo.www.rss_aggregator.entity.RssSource;
 import com.abitalo.www.rss_aggregator.util.MyUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.yalantis.phoenix.PullToRefreshView;
 import com.yydcdut.sdlv.DragListView;
 import com.yydcdut.sdlv.Menu;
 import com.yydcdut.sdlv.MenuItem;
 import com.yydcdut.sdlv.SlideAndDragListView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindCallback;
+import cn.bmob.v3.listener.GetListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by sangz on 2016/6/7.
@@ -45,6 +55,8 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
 //    private PullToRefreshView mPullToRefreshView;
     private ArrayList<Menu> mMenuList;
     private Handler handler;
+    private String userdataId;
+    private Context context;
 
     @Nullable
     @Override
@@ -53,6 +65,7 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
         initView();
         initHandler();
         loadData();
+        context=getContext();
         return view;
     }
 
@@ -64,6 +77,7 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
                     case MessageWhat.RSS_SOURCE_LOAD_SUCCESS:
                         Bundle bundle = msg.getData();
                         rssSourceList = bundle.getParcelableArrayList("rssSources");
+                        userdataId=bundle.getString("userdataId");
                         continueInitView();
                         break;
                 }
@@ -243,8 +257,38 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
 
     @Override
     public void onListItemClick(View v, int position) {
-//        Toast.makeText(getContext(), "onItemClick   position--->" + position, Toast.LENGTH_SHORT).show();
-        getFragmentManager().beginTransaction().replace(R.id.fragment_content,RSSListView.newInstance(rssSourceList.get(position).getRssUrl()), "fragment_view").commit();
+        final String url=rssSourceList.get(position).getRssUrl();
+        BmobQuery<RssSource> bmobQuery=new BmobQuery<>("rss_source");
+        bmobQuery.addWhereEqualTo("rssUrl",url);
+        bmobQuery.findObjects(context, new FindCallback() {
+            @Override
+            public void onSuccess(JSONArray jsonArray) {
+                try{
+                    final Integer facetId=(Integer)jsonArray.getJSONObject(0).get("facetId");
+                    BmobQuery<UserData> query=new BmobQuery<>();
+                    query.getObject(context, userdataId, new GetListener<UserData>() {
+                        @Override
+                        public void onSuccess(UserData userData) {
+                            userData.getTendencies().set(facetId,userData.getTendencies().get(facetId)+ Conf.CHECK_SUBSCRIBED_RSS);
+                            userData.update(context);
+                        }
+
+                        @Override
+                        public void onFailure(int i, String s) {
+
+                        }
+                    });
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_content,RSSListView.newInstance(url,facetId), "fragment_view").commit();
+                }catch (JSONException e){
+                    Log.i("abitalo.UserRssView",e.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+
+            }
+        });
 //        Log.i(TAG, "onListItemClick   " + position);
     }
 
@@ -314,7 +358,7 @@ public class UserRssView extends Fragment implements SlideAndDragListView.OnList
 
     @Override
     public void onItemDelete(View view, int position) {
-        UserRssEditHelper userRssEditHelper = new UserRssEditHelper(getContext(), rssSourceList.get(position).getRssUrl());
+        UserRssEditHelper userRssEditHelper = new UserRssEditHelper(getContext(), rssSourceList.get(position).getRssUrl(), null);
         userRssEditHelper.getUserId(UserRssEditHelper.DELETE);
         rssSourceList.remove(position - mListView.getHeaderViewsCount());
         mAdapter.notifyDataSetChanged();

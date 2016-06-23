@@ -1,27 +1,17 @@
 package com.abitalo.www.rss_aggregator.adapter;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.Uri;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.abitalo.www.rss_aggregator.R;
-import com.abitalo.www.rss_aggregator.helper.UserRssEditHelper;
-import com.abitalo.www.rss_aggregator.model.RssSource;
+import com.abitalo.www.rss_aggregator.entity.RssSource;
 import com.facebook.drawee.view.SimpleDraweeView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -65,7 +55,8 @@ public class RssSourceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolder){
-            holder.itemView.setTag(rssSources.get(position).getRssUrl());
+            holder.itemView.setTag(R.id.tag_url,rssSources.get(position).getRssUrl());
+            holder.itemView.setTag(R.id.tag_facetId,rssSources.get(position).getFacetId());
 
             ((ViewHolder)holder).tvRssSourceTitle.setText(rssSources.get(position).getRssName());
 

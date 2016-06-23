@@ -4,20 +4,16 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.abitalo.www.rss_aggregator.constants.Conf;
-import com.abitalo.www.rss_aggregator.presenter.AccountPresenter;
-import com.abitalo.www.rss_aggregator.view.AccountNavigationView;
 import com.abitalo.www.rss_aggregator.view.NavDiscoveryView;
 import com.abitalo.www.rss_aggregator.view.RSSListView;
 import com.abitalo.www.rss_aggregator.view.UserAccountView;
@@ -32,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     //维护一个fragment回退栈，栈顶显示到content_main中
     //具体的UI都写在单独的Fragment里面
     FragmentManager fragmentManager = null;
-    private AccountPresenter accountPresenter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +40,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         initialView();
 
-        /*使用维护的栈来更新content,事务要加入回退栈
-        fragmentManager.beginTransaction().add(R.id.fragment_content,new Fragment(),"tag").addToBackStack(null).commit();
-        fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("tag")).addToBackStack(null).commit();
-        */
     }
 
     void initialView() {
@@ -66,18 +57,15 @@ public class MainActivity extends AppCompatActivity {
                 Activity.MODE_PRIVATE);
         String name =sharedPreferences.getString("name", "");
 
-        if(name.length() > 0){/*
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_account);
-            assert navigationView != null;
-            navigationView.addView(new AccountNavigationView(this));*/
-            fragmentManager.beginTransaction().add(R.id.nav_account, new UserAccountView(), "user_account").commit();
+        if(name.length() > 0){
+            fragmentManager.beginTransaction().add(R.id.nav_account, new UserAccountView(), "user_account").addToBackStack(null).commit();
 
         }else{
-            fragmentManager.beginTransaction().add(R.id.nav_account, new WelcomeNav(), "account_nav").commit();
+            fragmentManager.beginTransaction().add(R.id.nav_account, new WelcomeNav(), "account_nav").addToBackStack(null).commit();
         }
-        fragmentManager.beginTransaction().add(R.id.discovery_nav_view, new NavDiscoveryView(), "discovery_view").commit();
+        fragmentManager.beginTransaction().add(R.id.discovery_nav_view, new NavDiscoveryView(), "discovery_view").addToBackStack(null).commit();
 
-        fragmentManager.beginTransaction().add(R.id.fragment_content,RSSListView.newInstance("https://www.zhihu.com/rss"), "fragment_view").commit();
+        fragmentManager.beginTransaction().add(R.id.fragment_content,RSSListView.newInstance("https://www.zhihu.com/rss",11), "fragment_view").addToBackStack(null).commit();
     }
 
     @Override

@@ -19,6 +19,95 @@ public class ListItem extends RecyclerView.ViewHolder implements View.OnClickLis
     TextView mAbstract = null;
     TextView author = null;
     TextView dot = null;
+
+    public TextView getTitle() {
+        return title;
+    }
+
+    public void setTitle(TextView title) {
+        this.title = title;
+    }
+
+    public TextView getDate() {
+        return date;
+    }
+
+    public void setDate(TextView date) {
+        this.date = date;
+    }
+
+    public TextView getmAbstract() {
+        return mAbstract;
+    }
+
+    public void setmAbstract(TextView mAbstract) {
+        this.mAbstract = mAbstract;
+    }
+
+    public TextView getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(TextView author) {
+        this.author = author;
+    }
+
+    public TextView getDot() {
+        return dot;
+    }
+
+    public void setDot(TextView dot) {
+        this.dot = dot;
+    }
+
+    public String getEncoded() {
+        return encoded;
+    }
+
+    public void setEncoded(String encoded) {
+        this.encoded = encoded;
+    }
+
+    public String getDescriptionstr() {
+        return descriptionstr;
+    }
+
+    public void setDescriptionstr(String descriptionstr) {
+        this.descriptionstr = descriptionstr;
+    }
+
+    public String getAuthorstr() {
+        return authorstr;
+    }
+
+    public void setAuthorstr(String authorstr) {
+        this.authorstr = authorstr;
+    }
+
+    public String getImgStr() {
+        return imgStr;
+    }
+
+    public void setImgStr(String imgStr) {
+        this.imgStr = imgStr;
+    }
+
+    public SimpleDraweeView getImage() {
+        return image;
+    }
+
+    public void setImage(SimpleDraweeView image) {
+        this.image = image;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     SimpleDraweeView image = null;
     String url = null;
     String descriptionstr = null;

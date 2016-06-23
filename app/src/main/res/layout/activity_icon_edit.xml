@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/icon_edit_image"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="25dp"
+        android:layout_width="256dp"
+        android:layout_height="256dp"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/icon_edit_btn"
+        android:layout_width="256dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:fontFamily="sans-serif"
+        android:text="设置头像"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:theme="@style/FacebookBlueButton" />
+
+</LinearLayout>

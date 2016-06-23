@@ -1,6 +1,7 @@
 package com.abitalo.www.rss_aggregator.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,19 +9,17 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.abitalo.www.rss_aggregator.IconEditActivity;
 import com.abitalo.www.rss_aggregator.R;
 import com.abitalo.www.rss_aggregator.constants.MessageWhat;
 import com.abitalo.www.rss_aggregator.helper.UserAccountViewHelper;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -33,7 +32,7 @@ public class UserAccountView extends Fragment implements View.OnClickListener {
     private TextView tvUserName;
     private TextView tvEmail;
     private ArrayList<String> userInfo;
-
+    private ImageView iconImage;
     private Handler handler;
     @Nullable
     @Override
@@ -90,6 +89,9 @@ public class UserAccountView extends Fragment implements View.OnClickListener {
         LinearLayout llSaveArticle = (LinearLayout) view.findViewById(R.id.save_article);
         llSaveArticle.setOnClickListener(this);
 
+        iconImage=(ImageView)view.findViewById(R.id.user_icon);
+        iconImage.setOnClickListener(this);
+
         tvUserName = (TextView) view.findViewById(R.id.tv_user_info_name);
         tvEmail = (TextView) view.findViewById(R.id.tv_user_info_email);
 
@@ -111,16 +113,18 @@ public class UserAccountView extends Fragment implements View.OnClickListener {
                 mainPage();
                 break;
             case R.id.star_article:
-                mainPage();
+                favoriteArticle();
                 break;
             case R.id.save_article:
                 mainPage();
+            case R.id.user_icon:
+                editIcon();
                 break;
         }
     }
 
     private void mainPage() {
-        getFragmentManager().beginTransaction().replace(R.id.fragment_content,RSSListView.newInstance("https://www.zhihu.com/rss"), "fragment_view").commit();
+        getFragmentManager().beginTransaction().replace(R.id.fragment_content,RSSListView.newInstance("https://www.zhihu.com/rss",11), "fragment_view").commit();
         DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
         drawer.closeDrawer(getActivity().findViewById(R.id.nav_account));
     }
@@ -132,6 +136,12 @@ public class UserAccountView extends Fragment implements View.OnClickListener {
         drawer.closeDrawer(getActivity().findViewById(R.id.nav_account));
     }
 
+    private void favoriteArticle(){
+        getFragmentManager().beginTransaction().replace(R.id.fragment_content, new UserRssView(), "fragment_view").commit();
+        ((DrawerLayout) getActivity().findViewById(R.id.drawer_layout)).closeDrawer(getActivity().findViewById(R.id.nav_account));
+
+    }
+
     private void userExit() {
         SharedPreferences mySharedPreferences= getContext().getSharedPreferences("userAuthentication",
                 Context.MODE_PRIVATE);
@@ -139,5 +149,11 @@ public class UserAccountView extends Fragment implements View.OnClickListener {
         editor.putString("name", "");
         editor.apply();
         getFragmentManager().beginTransaction().replace(R.id.nav_account, new WelcomeNav(), "welcome").commit();
+    }
+
+    private void editIcon(){
+        Intent intent=new Intent();
+        intent.setClass(getActivity(),IconEditActivity.class);
+        startActivity(intent);
     }
 }

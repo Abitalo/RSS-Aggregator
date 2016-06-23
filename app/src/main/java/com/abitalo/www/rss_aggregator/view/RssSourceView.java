@@ -1,7 +1,5 @@
 package com.abitalo.www.rss_aggregator.view;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,7 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,17 +22,9 @@ import com.abitalo.www.rss_aggregator.constants.MessageWhat;
 import com.abitalo.www.rss_aggregator.helper.RssSourceViewHelper;
 import com.abitalo.www.rss_aggregator.helper.RssSourceViewSearchHelper;
 import com.abitalo.www.rss_aggregator.helper.UserRssEditHelper;
-import com.abitalo.www.rss_aggregator.model.RssSource;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.abitalo.www.rss_aggregator.entity.RssSource;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindCallback;
 
 /**
  * Created by sangz on 2016/5/12.
@@ -54,19 +43,21 @@ public class RssSourceView extends Fragment {
     private ProgressBar progressBar;
     private String keyword;
 
+    private View clickedView;
 
-    public RssSourceView() {
-        this(1, FACET);
+
+    public static Fragment newInstance(String keyword,Integer option){
+        RssSourceView rssSourceView = new RssSourceView();
+        rssSourceView.keyword = keyword;
+        rssSourceView.option = option;
+        return rssSourceView;
     }
 
-    public RssSourceView(int facetId , int option) {
-        this.facetId = facetId;
-        this.option = option;
-    }
-
-    public RssSourceView(String keyword , int option) {
-        this.keyword = keyword;
-        this.option = option;
+    public static Fragment newInstance(int facetId, Integer option){
+        RssSourceView rssSourceView = new RssSourceView();
+        rssSourceView.facetId = facetId;
+        rssSourceView.option = option;
+        return rssSourceView;
     }
 
     @Nullable
@@ -99,11 +90,16 @@ public class RssSourceView extends Fragment {
                         rssSources = bundle.getParcelableArrayList("rssSources");
                         continueInitView();
                         break;
+                    case MessageWhat.NOT_LOGIN:
+                        clickedView.setVisibility(View.VISIBLE);
+                        Toast.makeText(getContext(),"请登录后订阅", Toast.LENGTH_SHORT).show();
+                        break;
                 }
                 super.handleMessage(msg);
             }
         };
     }
+
 
     private void continueInitView() {
         progressBar.setVisibility(View.GONE);
@@ -112,14 +108,17 @@ public class RssSourceView extends Fragment {
         rssSourceAdapter.setOnItemClickListener(new RssSourceAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View v, String data) {
+                //订阅
                 if (v.getId() == R.id.rss_add_source){
+                    clickedView = v;
                     v.setVisibility(View.GONE);
 
-                    UserRssEditHelper userRssEditHelper = new UserRssEditHelper(getContext(), v.getTag().toString());
+                    UserRssEditHelper userRssEditHelper = new UserRssEditHelper(getContext(), v.getTag().toString(), handler);
                     userRssEditHelper.getUserId(UserRssEditHelper.ADD);
 //                    Toast.makeText(getContext(), v.getTag().toString(), Toast.LENGTH_SHORT).show();
                 }else {
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_content,RSSListView.newInstance(v.getTag().toString()), "fragment_view").commit();
+                    //查看
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_content,RSSListView.newInstance(v.getTag(R.id.tag_url).toString(),(Integer)v.getTag(R.id.tag_facetId)), "fragment_view").addToBackStack(null).commit();
 
                     DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(getActivity().findViewById(R.id.discovery_nav_view));

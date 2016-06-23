@@ -1,23 +1,17 @@
 package com.abitalo.www.rss_aggregator.helper;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 
-import com.abitalo.www.rss_aggregator.model.MeetUser;
-import com.abitalo.www.rss_aggregator.model.UserData;
+import com.abitalo.www.rss_aggregator.entity.MeetUser;
+import com.abitalo.www.rss_aggregator.entity.UserData;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindCallback;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 
@@ -60,6 +54,9 @@ public class RegisterHelper {
         userData.setUserId(userId);
         Log.i("RegisterHelper", "userId:::"+userId);
         userData.setUserRegisterSet(new ArrayList());
+        //13个0
+        Double[] array={0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+        userData.setTendencies(new ArrayList<Double>(Arrays.asList(array)));
         userData.save(context, new SaveListener() {
             @Override
             public void onSuccess() {

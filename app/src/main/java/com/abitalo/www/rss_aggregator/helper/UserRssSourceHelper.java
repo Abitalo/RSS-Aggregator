@@ -9,10 +9,8 @@ import android.os.Message;
 import android.util.Log;
 
 import com.abitalo.www.rss_aggregator.constants.MessageWhat;
-import com.abitalo.www.rss_aggregator.model.Facet;
-import com.abitalo.www.rss_aggregator.model.MeetUser;
-import com.abitalo.www.rss_aggregator.model.RssSource;
-import com.abitalo.www.rss_aggregator.model.UserData;
+import com.abitalo.www.rss_aggregator.entity.MeetUser;
+import com.abitalo.www.rss_aggregator.entity.RssSource;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +34,7 @@ public class UserRssSourceHelper extends Thread {
     private ArrayList<String> userRegisterSet = new ArrayList<>();
     private ArrayList<RssSource> rssSources = null;
     private int rssCount;
-
+    private String userDataId;
     public UserRssSourceHelper(Context context, Handler handler) {
         this.context = context;
         this.handler = handler;
@@ -80,6 +78,7 @@ public class UserRssSourceHelper extends Thread {
                 assert jsonArray != null;
                 try {
                     jsonObject = jsonArray.getJSONObject(0);
+                    userDataId=jsonObject.getString("objectId");
 //                    Log.i("UserRssSourceHelper", jsonObject.get("userRegisterSet").toString().length()+"::");
 //                    Log.i("UserRssSourceHelper", jsonObject.get("userRegisterSet").toString()+":::");
                     if (jsonObject.get("userRegisterSet").toString().length() != 2){
@@ -148,6 +147,7 @@ public class UserRssSourceHelper extends Thread {
                         rssCount++;
                         if(rssCount == userRegisterSet.size()){
                             Bundle bundle = new Bundle();
+                            bundle.putString("userdataId",userDataId);
                             bundle.putParcelableArrayList("rssSources", rssSources);
                             if (!isRunning) {
                                 return;

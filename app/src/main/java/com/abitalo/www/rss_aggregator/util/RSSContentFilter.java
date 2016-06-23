@@ -15,7 +15,7 @@ public class RSSContentFilter {
         return description;
     }
 
-    public static String htmlRemoveTag(String inputString) {
+    private static String htmlRemoveTag(String inputString) {
         if (inputString == null)
             return null;
         String htmlStr = inputString; // 含html标签的字符串
