@@ -12,10 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.abitalo.www.rss_aggregator.R;
-import com.abitalo.www.rss_aggregator.model.RssSource;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by sangz on 2016/6/10.

@@ -4,17 +4,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.abitalo.www.rss_aggregator.constants.MessageWhat;
-import com.abitalo.www.rss_aggregator.model.Facet;
+import com.abitalo.www.rss_aggregator.entity.Facet;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindCallback;

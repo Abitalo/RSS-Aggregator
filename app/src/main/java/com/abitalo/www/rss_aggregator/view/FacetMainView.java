@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,7 @@ import com.abitalo.www.rss_aggregator.R;
 import com.abitalo.www.rss_aggregator.adapter.FacetAdapter;
 import com.abitalo.www.rss_aggregator.constants.MessageWhat;
 import com.abitalo.www.rss_aggregator.helper.FacetMainViewHelper;
-import com.abitalo.www.rss_aggregator.model.Facet;
+import com.abitalo.www.rss_aggregator.entity.Facet;
 
 import java.util.ArrayList;
 

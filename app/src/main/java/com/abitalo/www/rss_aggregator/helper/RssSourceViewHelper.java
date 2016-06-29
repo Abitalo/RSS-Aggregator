@@ -4,18 +4,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.abitalo.www.rss_aggregator.constants.MessageWhat;
-import com.abitalo.www.rss_aggregator.model.Facet;
-import com.abitalo.www.rss_aggregator.model.RssSource;
+import com.abitalo.www.rss_aggregator.entity.RssSource;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindCallback;
@@ -54,6 +51,7 @@ public class RssSourceViewHelper extends Thread {
                         rssSource.setRssName(jsonObject.get("rssName").toString());
                         rssSource.setRssUrl(jsonObject.get("rssUrl").toString());
                         rssSource.setRssIcon(jsonObject.get("rssIcon").toString());
+                        rssSource.setFacetId(facetId);
                         rssSources.add(rssSource);
                     } catch (JSONException e) {
                         e.printStackTrace();

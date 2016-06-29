@@ -9,19 +9,12 @@ import android.os.Message;
 import android.util.Log;
 
 import com.abitalo.www.rss_aggregator.constants.MessageWhat;
-import com.abitalo.www.rss_aggregator.model.Facet;
-import com.abitalo.www.rss_aggregator.model.MeetUser;
-import com.abitalo.www.rss_aggregator.model.RssSource;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.abitalo.www.rss_aggregator.entity.MeetUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindCallback;
 import cn.bmob.v3.listener.FindListener;
 
 /**

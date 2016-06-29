@@ -5,11 +5,9 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.abitalo.www.rss_aggregator.constants.MessageWhat;
-import com.abitalo.www.rss_aggregator.model.MeetUser;
-import com.abitalo.www.rss_aggregator.model.RssSource;
+import com.abitalo.www.rss_aggregator.entity.RssSource;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by sangz on 2016/6/10.

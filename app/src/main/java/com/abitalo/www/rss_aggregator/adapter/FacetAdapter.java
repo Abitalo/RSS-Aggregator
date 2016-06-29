@@ -6,18 +6,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.abitalo.www.rss_aggregator.R;
-import com.abitalo.www.rss_aggregator.model.Facet;
+import com.abitalo.www.rss_aggregator.entity.Facet;
 import com.abitalo.www.rss_aggregator.view.RssSourceView;
-import com.abitalo.www.rss_aggregator.view.SignInView;
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
@@ -103,7 +99,7 @@ public class FacetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private void showResource(int facetId) {
         FragmentManager fragmentManager = fragment.getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.nav_discovery_main, new RssSourceView(facetId, RssSourceView.FACET), "rss_source").commit();
+        fragmentManager.beginTransaction().replace(R.id.nav_discovery_main, RssSourceView.newInstance(facetId, RssSourceView.FACET), "rss_source").commit();
     }
 
 

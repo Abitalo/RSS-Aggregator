@@ -3,11 +3,16 @@ package com.abitalo.www.rss_aggregator.helper;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
-import com.abitalo.www.rss_aggregator.model.MeetUser;
-import com.abitalo.www.rss_aggregator.model.RssSource;
-import com.abitalo.www.rss_aggregator.model.UserData;
+import com.abitalo.www.rss_aggregator.constants.Conf;
+import com.abitalo.www.rss_aggregator.constants.MessageWhat;
+import com.abitalo.www.rss_aggregator.entity.MeetUser;
+import com.abitalo.www.rss_aggregator.entity.RssSource;
+import com.abitalo.www.rss_aggregator.entity.UserData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,11 +20,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
+import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindCallback;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.GetCallback;
+import cn.bmob.v3.listener.GetListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
@@ -33,12 +40,13 @@ public class UserRssEditHelper {
     private String userDataId;
     public static int ADD = 0;
     public static int DELETE = 1;
+    private Handler handler;
     private ArrayList<String> userRegisterSet = new ArrayList<>();
 
-    public UserRssEditHelper(Context context, String url){
+    public UserRssEditHelper(Context context, String url, Handler handler){
         this.context = context;
         this.url = url;
-
+        this.handler = handler;
         SharedPreferences sharedPreferences= context.getSharedPreferences("userAuthentication",
                 Activity.MODE_PRIVATE);
         userName =sharedPreferences.getString("name", "");
@@ -53,8 +61,19 @@ public class UserRssEditHelper {
 
             @Override
             public void onSuccess(List<MeetUser> list) {
-                userId = list.get(0).getObjectId();
-                getUserDataId(option);
+                if(list.size() > 0){
+                    userId = list.get(0).getObjectId();
+                    getUserDataId(option);
+                }else {
+                    if (handler != null){
+                        Message message = new Message();
+                        message.what = MessageWhat.NOT_LOGIN;
+                        Bundle bundle = new Bundle();
+                        bundle.putString("Login", "Not login");
+                        message.setData(bundle);
+                        handler.sendMessage(message);
+                    }
+                }
             }
 
             @Override
@@ -66,7 +85,6 @@ public class UserRssEditHelper {
     }
 
     private void getUserDataId(final int option){
-//        BmobQuery<UserData> bmobQuery = new BmobQuery<>();
         BmobQuery bmobQuery = new BmobQuery("UserData");
         bmobQuery.addWhereEqualTo("userId", userId);
         bmobQuery.findObjects(context, new FindCallback() {
@@ -105,21 +123,6 @@ public class UserRssEditHelper {
                 Log.i("RegisterHelper2", "Message:::" + s);
             }
         });
-        /*bmobQuery.findObjects(context, new FindListener<UserData>(){
-            @Override
-            public void onSuccess(List<UserData> list) {
-                userDataId = list.get(0).getObjectId();
-                userRegisterSet = list.get(0).getUserRegisterSet();
-                checkContain();
-                updateUserData();
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                Log.i("RegisterHelper", "code:::"+i);
-                Log.i("RegisterHelper", "Message:::"+s);
-            }
-        });*/
     }
 
     private void deleteContain() {
@@ -131,15 +134,6 @@ public class UserRssEditHelper {
 
 
     private void checkContain() {
-       /* boolean isFind = false;
-        for (int i = 0; i < userRegisterSet.size(); i++){
-            if (userRegisterSet.get(i).equals(url)){
-                isFind = true;
-            }
-        }
-        if (!isFind){
-            userRegisterSet.add(url);
-        }*/
         if (!userRegisterSet.contains(url)){
             userRegisterSet.add(url);
         }
@@ -160,7 +154,42 @@ public class UserRssEditHelper {
                 Log.i("RegisterHelper", "Message:::"+s);
             }
         });
+    }
 
+    private void updateTendency(final Integer option){
+        BmobQuery<RssSource> query=new BmobQuery<RssSource>("rss_source");
+        query.addWhereEqualTo("rssUrl",url);
+        query.findObjects(context, new FindCallback() {
+            @Override
+            public void onSuccess(JSONArray jsonArray) {
+                try{
+                    final Integer facetId=jsonArray.getJSONObject(0).getInt("facetId");
+                    BmobQuery<UserData> queryForUserData=new BmobQuery<>();
+                    final String constUserDataId=userDataId;
+                    queryForUserData.getObject(context, constUserDataId, new GetListener<UserData>() {
+                        @Override
+                        public void onSuccess(UserData userData) {
+                            if(option==ADD)
+                                userData.getTendencies().set(facetId,userData.getTendencies().get(facetId)+ Conf.SUBSCRIBE_RSS);
+                            if(option==DELETE)
+                                userData.getTendencies().set(facetId,userData.getTendencies().get(facetId)- Conf.SUBSCRIBE_RSS);
+                            userData.update(context);
+                        }
 
+                        @Override
+                        public void onFailure(int i, String s) {
+
+                        }
+                    });
+                }catch (JSONException e){
+                    Log.i("abitalo.UserRssEdit",e.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+
+            }
+        });
     }
 }
